@@ -30,6 +30,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 PROJECTS = Path.home() / ".claude" / "projects"
+CLAUDE_JSON = Path.home() / ".claude.json"
 VENV = REPO / ".venv"
 
 
@@ -63,6 +64,51 @@ def write_meta(attempt, meta):
     p = Path(attempt) / ".exam" / "meta.json"
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(meta, indent=2) + "\n")
+
+
+def trust_state(path):
+    """Whether Claude Code will open `path` without stopping to ask about it."""
+    try:
+        config = json.loads(CLAUDE_JSON.read_text())
+    except (OSError, ValueError):
+        return None, {}
+    entry = config.get("projects", {}).get(str(path), {})
+    return bool(entry.get("hasTrustDialogAccepted")), config
+
+
+def ensure_trusted(workspace):
+    """Carry this repo's trust across to the attempt workspace inside it.
+
+    A session spawned into a path Claude Code has not seen stops on the folder trust
+    prompt before it boots -- and every attempt is a brand new path, so this fires on
+    the normal case, not an edge one. Left unhandled it eats the opening minutes of a
+    timed drill on a dialog, which is the one resource the drill is about.
+
+    Trust is PROPAGATED, never invented: the only thing authorising this is that the
+    user already trusted the repository the workspace lives in. If the repo itself is
+    untrusted, refuse and say how to fix it once, by hand.
+    """
+    ws = str(Path(workspace).resolve())
+    trusted, config = trust_state(ws)
+    if trusted:
+        return {"trusted": True, "action": "already trusted"}
+    if trusted is None:
+        return {"trusted": None, "action": "no ~/.claude.json to read"}
+    if not trust_state(str(REPO))[0]:
+        return {"trusted": False, "action": "refused",
+                "reason": f"{REPO} is not trusted either",
+                "hint": f"trust it once by hand: cd {REPO} && claude  "
+                        f"(accept the prompt, then /exit). Every later attempt "
+                        f"inherits it."}
+    config.setdefault("projects", {}).setdefault(ws, {})["hasTrustDialogAccepted"] = True
+    tmp = CLAUDE_JSON.with_suffix(".json.cvtest-tmp")
+    try:
+        tmp.write_text(json.dumps(config, indent=2))
+        os.replace(tmp, CLAUDE_JSON)
+    except OSError as exc:
+        tmp.unlink(missing_ok=True)
+        return {"trusted": False, "action": "failed", "reason": str(exc)}
+    return {"trusted": True, "action": f"propagated from {REPO}"}
 
 
 def tmux(*args):
@@ -168,6 +214,11 @@ def cmd_spawn(args):
         return die("not inside tmux -- cannot open a window",
                    hint=f"run by hand: cd {ws} && claude -n {meta['session_name']}")
 
+    trust = ensure_trusted(ws)
+    if trust.get("action") == "refused":
+        return die("would hang on the folder trust prompt before the session boots",
+                   trust=trust)
+
     name = meta["session_name"]
     # No initial prompt: the session must boot idle and wait. A prompt here would
     # be the harness instructing the candidate's assistant, which is the one thing
@@ -185,7 +236,7 @@ def cmd_spawn(args):
     meta["window"], meta["pane"] = window, pane.strip()
     write_meta(attempt, meta)
     print(json.dumps({"ok": True, "launched": name, "window": window,
-                      "pane": meta["pane"], "cwd": str(ws),
+                      "pane": meta["pane"], "cwd": str(ws), "trust": trust,
                       "started_at": meta["started_at"],
                       "deadline_minutes": meta["minutes"]}, indent=2))
     return 0
