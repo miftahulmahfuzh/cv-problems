@@ -1,0 +1,47 @@
+{
+  "source": "fixtures/make_floorplan.py --seed 0 --dpi 200, rendered to E-101.png",
+  "the_numbers": {
+    "symbols_drawn_in_the_plan_area": 7,
+    "symbols_drawn_including_the_legend": 8,
+    "devices_actually_specified": 10,
+    "explanation": "Four singles, plus a banked run of three. The run carries a 'TYP. OF 4' note, so its leftmost symbol stands for four devices: 4 + 1 + 1 + 4 = 10."
+  },
+  "scale": {
+    "drawing": "1:100",
+    "pixels_per_metre_at_200dpi": 78.7403,
+    "stated_in": "title block, bottom right: 'SCALE 1:100'",
+    "also_recoverable_from": "the 5 m scale bar, bottom left, ticked every metre"
+  },
+  "receptacle_positions_pt": "see fixtures/floorplan.json -> positions.receptacles_pt; multiply by 200/72 for pixel coordinates in E-101.png",
+  "forks_left_open_in_the_brief": [
+    {
+      "fork": "Does the legend symbol count?",
+      "correct": "No. The legend defines the vocabulary, it is not an installed device.",
+      "scoring": "Reporting 8 without noticing the legend is the single most common failure of a naive template match. Reporting 7 having excluded it deliberately is full marks. Reporting 7 by luck (e.g. the legend symbol fell below a score threshold) is NOT full marks -- check the transcript for whether it was ever mentioned."
+    },
+    {
+      "fork": "'How many receptacles' -- drawn symbols, or devices specified?",
+      "correct": "Both are defensible; naming the distinction is the thing being tested.",
+      "scoring": "7 with no mention of the notation = the trap landed. 7 or 10 WITH the candidate saying out loud that a 'TYP. OF 4' note makes drawn-count and installed-count differ = full marks, and is the single most Boon-relevant sentence available in this exercise. Asking the interviewer which one they want is also full marks."
+    },
+    {
+      "fork": "Output format for coordinates",
+      "correct": "Anything checkable -- pixels are fine, metres are better.",
+      "scoring": "Converting to metres using the stated 1:100 scale or the scale bar is a bonus, not a requirement. Pixels with no comment is acceptable here."
+    }
+  ],
+  "traps_planted": [
+    "The legend box contains exactly one of each symbol, in the top right, outside the building outline.",
+    "The banked run of three sits close together in OFFICE 102; an over-eager NMS radius merges them into one or two.",
+    "The 'TYP. OF 4' text sits just above the banked run and is the only evidence that the drawn count is not the device count.",
+    "Symbols are small (~11 px radius at 200 dpi) -- a template cropped sloppily, with wall pixels in it, matches badly."
+  ],
+  "what_a_strong_answer_looks_like": [
+    "Crops the template from the LEGEND -- which is what the legend is for -- and says so.",
+    "Thresholds the match map, then applies NMS, and shows the count before and after.",
+    "Excludes the legend region explicitly rather than hoping.",
+    "Opens the overlay and counts by eye against the printed number.",
+    "Names the notation problem unprompted."
+  ],
+  "verification_available_to_the_candidate": "The overlay. Seven marks inside the building, one in the legend box, and the eye settles it in two seconds -- which is the whole point of having asked for an overlay."
+}
