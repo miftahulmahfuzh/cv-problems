@@ -1,0 +1,17 @@
+{
+  "slug": "rect-center",
+  "title": "Detect rectangles, mark their centers",
+  "date": "2026-10-22",
+  "minutes": 15,
+  "created_at": "2026-10-22T09:45:00+00:00",
+  "started_at": "2026-10-22T09:49:43+00:00",
+  "finished_at": "2026-10-22T09:54:30+00:00",
+  "session_name": "cvtest-rect-center",
+  "workspace": "/home/miftah/cv-problems/attempts/2026-10-22-rect-center/solution",
+  "window": null,
+  "pane": null,
+  "note": "Run predates the harness; reconstructed by hand from the live session.",
+  "outcome": "passed",
+  "tier": 1,
+  "archetype": 1
+}

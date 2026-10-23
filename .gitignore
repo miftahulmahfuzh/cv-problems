@@ -1,0 +1,8 @@
+.venv/
+.venv-*/
+__pycache__/
+*.pyc
+# Generated fixtures: deterministic, regenerate with fixtures/make_floorplan.py.
+# The PDF and ground truth are small and worth having checked in; the raster is not.
+fixtures/*.png
+!fixtures/mock/*.png

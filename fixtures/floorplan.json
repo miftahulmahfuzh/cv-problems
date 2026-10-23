@@ -1,0 +1,130 @@
+{
+  "seed": 0,
+  "png_dpi": 200,
+  "scale": {
+    "drawing": "1:100",
+    "points_per_metre": 28.3465,
+    "pixels_per_metre_at_dpi": 78.7403,
+    "scale_bar_length_m": 5.0
+  },
+  "rooms": {
+    "count": 4,
+    "names": [
+      "OFFICE 101",
+      "OFFICE 102",
+      "STORE 103",
+      "MECH 104"
+    ],
+    "total_area_m2": 240.0
+  },
+  "walls": {
+    "segment_count_after_openings": 15,
+    "total_length_m": 127.7
+  },
+  "doors": {
+    "count": 4
+  },
+  "windows": {
+    "count": 2
+  },
+  "receptacles": {
+    "symbols_drawn_on_plan": 7,
+    "symbols_drawn_including_legend": 8,
+    "devices_actually_specified": 10,
+    "note": "the 'TYP. OF 4' note makes the installed count differ from the drawn count -- a pixel-perfect detector still gets the quantity wrong, which is the point"
+  },
+  "positions": {
+    "receptacles_pt": [
+      {
+        "x": 126.69,
+        "y": 156.69,
+        "kind": "single",
+        "represents": 1
+      },
+      {
+        "x": 126.69,
+        "y": 369.29,
+        "kind": "single",
+        "represents": 1
+      },
+      {
+        "x": 353.47,
+        "y": 156.69,
+        "kind": "single",
+        "represents": 1
+      },
+      {
+        "x": 537.72,
+        "y": 383.47,
+        "kind": "single",
+        "represents": 1
+      },
+      {
+        "x": 310.95,
+        "y": 397.64,
+        "kind": "banked",
+        "represents": 4
+      },
+      {
+        "x": 356.3,
+        "y": 397.64,
+        "kind": "banked",
+        "represents": 1
+      },
+      {
+        "x": 401.65,
+        "y": 397.64,
+        "kind": "banked",
+        "represents": 1
+      }
+    ],
+    "doors_pt": [
+      {
+        "x": 183.39,
+        "y": 440.16,
+        "width_m": 1.0,
+        "orientation": "horizontal"
+      },
+      {
+        "x": 268.43,
+        "y": 326.77,
+        "width_m": 0.9,
+        "orientation": "vertical"
+      },
+      {
+        "x": 438.5,
+        "y": 185.04,
+        "width_m": 0.9,
+        "orientation": "vertical"
+      },
+      {
+        "x": 551.89,
+        "y": 270.08,
+        "width_m": 0.9,
+        "orientation": "horizontal"
+      }
+    ],
+    "windows_pt": [
+      {
+        "x": 240.08,
+        "y": 100.0,
+        "width_m": 1.8,
+        "orientation": "horizontal"
+      },
+      {
+        "x": 466.85,
+        "y": 100.0,
+        "width_m": 1.8,
+        "orientation": "horizontal"
+      }
+    ],
+    "notes": [
+      {
+        "text": "TYP. OF 4",
+        "x": 302.44,
+        "y": 385.64,
+        "means": "the leftmost banked symbol stands for 4 devices"
+      }
+    ]
+  }
+}

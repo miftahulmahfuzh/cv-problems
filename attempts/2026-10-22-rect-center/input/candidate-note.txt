@@ -1,0 +1,1 @@
+we need a bounding box for object detection. and then you can determine the center of the object
