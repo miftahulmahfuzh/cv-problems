@@ -336,6 +336,8 @@ ask CLIP to count. For counting, use geometry.
 Is the input a PDF?
 ├── Does it have a text layer?  (pymupdf: page.get_text("words"))
 │   ├── yes -> you have text AND coordinates for free. No OCR. Start here.
+│   │          Plan set (walls, symbols, a schedule sheet)?
+│   │          -> reference/pdf-plan-sets.md
 │   └── no  -> render to raster at 200-300 dpi, then treat as an image
 └── not a PDF -> it is an image
 

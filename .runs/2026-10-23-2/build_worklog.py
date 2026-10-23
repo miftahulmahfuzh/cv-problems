@@ -111,6 +111,8 @@ def main():
 
     html = TEMPLATE
     for key, val in (("__IN_HTML__", in_html), ("__OUT_HTML__", out_html),
+                     ("__VERDICT_HTML__", (HERE / "verdict.html").read_text()
+                      if (HERE / "verdict.html").is_file() else ""),
                      ("__N_IN__", str(len(ins))), ("__N_OUT__", str(len(outs))),
                      ("__SRC__", src)):
         html = html.replace(key, val)

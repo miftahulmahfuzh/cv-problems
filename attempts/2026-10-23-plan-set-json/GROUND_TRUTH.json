@@ -10,7 +10,7 @@
     "receptacle_symbols_drawn_including_legend": 9,
     "receptacle_devices_per_room_per_schedule": {"OFFICE 101": 3, "OFFICE 102": 7, "STORE 103": 1, "MECH 104": 1},
     "receptacle_devices_total_per_schedule": 12,
-    "explanation": "Eight symbols are drawn. The banked run in OFFICE 102 carries a 'TYP. OF 6' note, and sheet E-601 states the installed quantities explicitly -- 12 in total. 8 is what the plan draws; 12 is what gets installed and bid."
+    "explanation": "Eight symbols are drawn. The banked run in OFFICE 102 carries a 'TYP. OF 5' note, and sheet E-601 states the installed quantities explicitly -- 12 in total. 8 is what the plan draws; 12 is what gets installed and bid."
   },
   "forks_left_open_in_the_brief": [
     {
@@ -33,7 +33,7 @@
     "The set is two pages and the brief implies one. Only `len(doc)` or a page loop reveals it.",
     "Rasterising and doing pixel CV is the expensive wrong road: every string on both sheets arrives from get_text('words') WITH a bounding box, and page 1 carries 66 exact vector paths from get_drawings().",
     "The legend on E-101 holds one of every symbol, outside the building outline -- it inflates any symbol count by one.",
-    "'TYP. OF 6' sits above the banked run; it is the only on-plan evidence that drawn != installed, and it is parseable text, not pixels.",
+    "'TYP. OF 5' sits above the banked run; it is the only on-plan evidence that drawn != installed, and it is parseable text, not pixels.",
     "E-601's own note states that the schedule governs. A candidate who reads the text layer has that sentence handed to them."
   ],
   "what_a_strong_answer_looks_like": [

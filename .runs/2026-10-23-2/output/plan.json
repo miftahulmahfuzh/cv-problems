@@ -1,0 +1,116 @@
+{
+  "source_pdf": "E-set.pdf",
+  "sheet": "E-101",
+  "scale": "1:100",
+  "units": {
+    "area": "m2"
+  },
+  "rooms": [
+    {
+      "room": "OFFICE 101",
+      "name": "OFFICE",
+      "number": "101",
+      "area_m2": 84.0,
+      "receptacles": 3,
+      "checks": {
+        "area_printed_m2": 84.0,
+        "area_from_geometry_m2": 84.0,
+        "area_agrees": true,
+        "receptacles_from_schedule": 3,
+        "receptacles_from_plan_symbols": 3,
+        "symbols_drawn": 3,
+        "sources_agree": true
+      }
+    },
+    {
+      "room": "OFFICE 102",
+      "name": "OFFICE",
+      "number": "102",
+      "area_m2": 72.0,
+      "receptacles": 7,
+      "checks": {
+        "area_printed_m2": 72.0,
+        "area_from_geometry_m2": 72.02,
+        "area_agrees": true,
+        "receptacles_from_schedule": 7,
+        "receptacles_from_plan_symbols": 7,
+        "symbols_drawn": 3,
+        "sources_agree": true
+      }
+    },
+    {
+      "room": "STORE 103",
+      "name": "STORE",
+      "number": "103",
+      "area_m2": 42.0,
+      "receptacles": 1,
+      "checks": {
+        "area_printed_m2": 42.0,
+        "area_from_geometry_m2": 42.0,
+        "area_agrees": true,
+        "receptacles_from_schedule": 1,
+        "receptacles_from_plan_symbols": 1,
+        "symbols_drawn": 1,
+        "sources_agree": true
+      }
+    },
+    {
+      "room": "MECH 104",
+      "name": "MECH",
+      "number": "104",
+      "area_m2": 42.0,
+      "receptacles": 1,
+      "checks": {
+        "area_printed_m2": 42.0,
+        "area_from_geometry_m2": 42.0,
+        "area_agrees": true,
+        "receptacles_from_schedule": 1,
+        "receptacles_from_plan_symbols": 1,
+        "symbols_drawn": 1,
+        "sources_agree": true
+      }
+    }
+  ],
+  "totals": {
+    "rooms": 4,
+    "area_m2": 240.0,
+    "receptacles": 12
+  },
+  "provenance": {
+    "areas": "wall-centreline geometry, cross-checked against printed labels",
+    "receptacle_quantities": "panel schedule on E-601",
+    "scale_pt_per_m_stated": 28.346,
+    "scale_pt_per_m_from_bar": 28.346,
+    "scale_bar_agrees": true,
+    "wall_grid_regions": 4,
+    "symbols_on_sheet": 9,
+    "symbols_inside_rooms": 8,
+    "typical_of_notes": [
+      {
+        "note": "TYP. OF 5",
+        "multiplier": 5,
+        "room": "OFFICE 102",
+        "at": [
+          311.0,
+          397.6
+        ]
+      }
+    ],
+    "sheet_revisions": {
+      "E-101": {
+        "rev": "2",
+        "date": "2026-10-23"
+      },
+      "E-601": {
+        "rev": "2",
+        "date": "2026-10-23"
+      }
+    },
+    "revisions_match": true,
+    "schedule_rooms_not_on_plan": [],
+    "plan_rooms_not_in_schedule": [],
+    "rooms_where_sources_disagree": [],
+    "schedule_total": 12,
+    "schedule_total_matches_rows": true
+  }
+}

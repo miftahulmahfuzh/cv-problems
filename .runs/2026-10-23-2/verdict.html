@@ -1,0 +1,86 @@
+
+  <section id="brief">
+    <div class="sec-head">
+      <h2>The brief</h2>
+      <p class="sec-note">tier 4 &middot; archetype #12 &middot; 30 min</p>
+    </div>
+    <blockquote class="brief">
+      <p><code>input/E-set.pdf</code> is the electrical plan set for a small office fit-out.</p>
+      <p>I need it as structured data I can load straight into a bid: the sheet number and drawing scale, every room with its area, and the receptacle quantity per room.</p>
+      <p>One script in this directory. Write the result to <code>output/plan.json</code> and print it.</p>
+      <p>30 minutes. At the end, tell me which of those numbers you'd stake a bid on and which you wouldn't.</p>
+    </blockquote>
+    <p class="prose">The set is <b>two pages</b> and the brief never says so. Page 1 is the plan; page 2 is the panel schedule, where the real quantities live. Noticing page 2 is the hinge of the whole problem.</p>
+  </section>
+
+  <section id="truth">
+    <div class="sec-head">
+      <h2>Ground truth vs produced</h2>
+      <p class="sec-note">14 of 14 match</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Value</th><th>Expected</th><th>Produced</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sheet / scale</td><td class="num">E-101 &middot; 1:100</td><td class="num">E-101 &middot; 1:100</td><td class="ok">OK</td></tr>
+          <tr><td>OFFICE 101 area</td><td class="num">84.0 m&sup2;</td><td class="num">84.0 m&sup2;</td><td class="ok">OK</td></tr>
+          <tr><td>OFFICE 102 area</td><td class="num">72.0 m&sup2;</td><td class="num">72.0 m&sup2;</td><td class="ok">OK</td></tr>
+          <tr><td>STORE 103 area</td><td class="num">42.0 m&sup2;</td><td class="num">42.0 m&sup2;</td><td class="ok">OK</td></tr>
+          <tr><td>MECH 104 area</td><td class="num">42.0 m&sup2;</td><td class="num">42.0 m&sup2;</td><td class="ok">OK</td></tr>
+          <tr><td>Total area</td><td class="num">240.0 m&sup2;</td><td class="num">240.0 m&sup2;</td><td class="ok">OK</td></tr>
+          <tr><td>Receptacles per room</td><td class="num">3 / 7 / 1 / 1</td><td class="num">3 / 7 / 1 / 1</td><td class="ok">OK</td></tr>
+          <tr><td>Receptacle total</td><td class="num">12</td><td class="num">12</td><td class="ok">OK</td></tr>
+          <tr><td>Symbols drawn on plan</td><td class="num">8</td><td class="num">8</td><td class="ok">OK</td></tr>
+          <tr><td>Symbols incl. legend</td><td class="num">9</td><td class="num">9</td><td class="ok">OK</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Planted trap</th><th>Outcome</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Set is two pages; the brief implies one</td><td class="ok">avoided &mdash; deliberately</td></tr>
+          <tr><td>Rasterising and doing pixel CV is the expensive wrong road</td><td class="ok">avoided &mdash; deliberately</td></tr>
+          <tr><td>Legend holds one of every symbol, inflating any count by one</td><td class="ok">avoided &mdash; deliberately</td></tr>
+          <tr><td><code>TYP. OF 5</code> is the only on-plan evidence that drawn &ne; installed</td><td class="ok">hit &mdash; with candidate help</td></tr>
+          <tr><td>E-601 states in text that the schedule governs</td><td class="ok">found and quoted</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">Three harness bugs surfaced and were fixed: <code>GROUND_TRUTH.json</code> and the generator's own prose carried a stale <code>TYP. OF 6</code> / <code>TYP. OF 4</code> against a fixture that reads <code>TYP. OF 5</code>, and <code>cvtest.py</code> silently dropped one of the candidate's four instructions &mdash; a message typed mid-turn persists as a queued-command attachment, never as a user record.</p>
+  </section>
+
+  <section id="verdict">
+    <div class="sec-head">
+      <h2>Verdict</h2>
+      <p class="sec-note">22.2 of 30 min &middot; 4 instructions &middot; 0 interrupts</p>
+    </div>
+    <p class="verdict-line">Passed &mdash; every number correct, inside budget. But agent-verified, not candidate-verified.</p>
+    <p class="prose">All fourteen values match, all traps avoided, both free cross-checks in the text layer taken. None of it was asked for: the verification that makes this run look strong was the agent's initiative. Same finding as attempt 001, with a harder trap.</p>
+
+    <ul class="scores">
+      <li><span class="dim">1 &middot; Requirement capture</span><span class="grade g-adequate">adequate</span></li>
+      <li><span class="dim">2 &middot; Data literacy</span><span class="grade g-weak">weak</span></li>
+      <li><span class="dim">3 &middot; Decomposition</span><span class="grade g-adequate">adequate</span></li>
+      <li><span class="dim">4 &middot; Verification</span><span class="grade g-weak">weak</span></li>
+      <li><span class="dim">5 &middot; Correction quality</span><span class="grade g-none">not exercised</span></li>
+      <li><span class="dim">6 &middot; Domain vocabulary</span><span class="grade g-weak">weak</span></li>
+      <li><span class="dim">7 &middot; Scope control</span><span class="grade g-adequate">adequate</span></li>
+    </ul>
+
+    <p class="prose"><b>Requirement drift, twice.</b> &ldquo;Only the scaled sheet&rdquo; narrowed the deliverable, dropping E-601 from the top level of the JSON. And answering the <code>TYP. OF 5</code> question with a reconciliation rather than a ruling collapsed the plan-vs-schedule cross-check into itself: the plan-side 7 is now computed with a multiplier chosen by someone who already knew the schedule said 7. The reading was right &mdash; confirmed by the generator &mdash; but nothing in the run could have told a correct reading from a convenient one.</p>
+
+    <h3 style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-soft);margin:6px 0 0;font-weight:600;">Carry into the next attempt</h3>
+    <ol class="carry prose">
+      <li><b>Never answer a clarifying question without attaching what you want to see.</b> At T+5.6, same round-trip: <i>&ldquo;Both sheets, scale per sheet. Keep drawn and scheduled as two separate fields per room, and show me every room where they disagree before you write the JSON.&rdquo;</i></li>
+      <li><b>Type one observation about the data before the first instruction.</b> <i>&ldquo;Two-page vector PDF, real text layer on both sheets, don't rasterise.&rdquo;</i> The phrase <b>text layer</b> is the one to own for this archetype &mdash; and &ldquo;OCR&rdquo; was the wrong word for it.</li>
+      <li><b>Ask for the artifact, not the narration.</b> <i>&ldquo;walk me through it&rdquo;</i> got prose; asking for the overlay gets the thing that proves the answer.</li>
+      <li><b>When two sources disagree, preserve the disagreement.</b> Report both labelled, name which the bid uses. Reconciling with a rule you supplied destroys the only independent check you had.</li>
+    </ol>
+    <p class="prose" style="color:var(--ink-soft);font-size:0.84rem;">Full text, including where the cold-read scorer and the evaluator disagreed, in <code>attempts/2026-10-23-plan-set-json/EVALUATION.md</code>.</p>
+  </section>

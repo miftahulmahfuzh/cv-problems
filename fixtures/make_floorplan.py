@@ -10,7 +10,7 @@ habit on this kind of input is to check for that text layer before doing any pix
 work. A fixture that only existed as a PNG would quietly teach the wrong reflex.
 
 It also plants the trap Boon's own writing is about: the plan draws six receptacles
-explicitly and then writes "TYP. OF 4" beside a banked run of three. Counting drawn
+explicitly and then writes "TYP. OF n" beside a banked run. Counting drawn
 symbols gives one answer; counting installed devices gives another. Both numbers are
 in the ground truth, under names that say which is which.
 """
@@ -302,7 +302,7 @@ def main():
             "symbols_drawn_on_plan": len(p.outlets),
             "symbols_drawn_including_legend": len(p.outlets) + 1,
             "devices_actually_specified": sum(o["represents"] for o in p.outlets),
-            "note": "the 'TYP. OF 4' note makes the installed count differ from the "
+            "note": f"the '{p.notes[0]['text']}' note makes the installed count differ from the "
                     "drawn count -- a pixel-perfect detector still gets the quantity "
                     "wrong, which is the point",
         },

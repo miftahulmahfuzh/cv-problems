@@ -237,6 +237,61 @@
     color: var(--ink-soft);
   }
 
+  .prose { font-size: 0.92rem; max-width: 68ch; margin: 0; }
+  .prose p { margin: 0 0 10px; }
+  blockquote.brief {
+    margin: 0;
+    padding: 14px 18px;
+    background: var(--panel);
+    border-left: 3px solid var(--accent);
+  }
+  blockquote.brief p { margin: 0 0 8px; }
+  blockquote.brief p:last-child { margin: 0; }
+  blockquote.brief code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    color: var(--ink);
+  }
+  .tbl-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+  th, td { text-align: left; padding: 6px 12px 6px 0; border-bottom: 1px solid var(--rule); }
+  th {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .ok { color: var(--accent); font-family: var(--mono); font-size: 0.78rem; }
+  .scores { list-style: none; padding: 0; margin: 0;
+            display: grid; gap: 4px 18px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .scores li {
+    display: flex; gap: 10px; align-items: baseline;
+    padding: 5px 0; border-bottom: 1px solid var(--rule);
+  }
+  .scores .dim { flex: 1; }
+  .grade {
+    font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 1px 7px; border: 1px solid currentColor;
+  }
+  .g-strong { color: #1b7a4b; }
+  .g-adequate { color: var(--accent); }
+  .g-weak { color: #b4471f; }
+  .g-none { color: var(--ink-faint); }
+  :root:not([data-theme="light"]) .g-strong { color: #5fbf8a; }
+  :root[data-theme="dark"] .g-strong { color: #5fbf8a; }
+  :root:not([data-theme="light"]) .g-weak { color: #e8835c; }
+  :root[data-theme="dark"] .g-weak { color: #e8835c; }
+  ol.carry { margin: 0; padding-left: 20px; }
+  ol.carry li { margin-bottom: 8px; }
+  .verdict-line {
+    font-size: 1rem; font-weight: 600; margin: 0 0 10px;
+    text-wrap: balance;
+  }
+
   @media (max-width: 560px) {
     .plate-meta, .weight, .sub { margin-left: 0; }
   }
@@ -263,6 +318,7 @@ __IN_HTML__
     </div>
 __OUT_HTML__
   </section>
+__VERDICT_HTML__
 </div>
 
 <script>

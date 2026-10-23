@@ -372,6 +372,18 @@ def load_turns(path):
             continue
         kind, msg, ts = d.get("type"), d.get("message") or {}, d.get("timestamp")
         content = msg.get("content")
+        if kind == "attachment":
+            # A message typed WHILE the agent was mid-turn is persisted as a
+            # queued_command attachment, never as `type: user`. Missing these
+            # silently under-counts the candidate's instructions and loses some
+            # of their best work -- run 2026-10-23-2 lost 1 of 4 this way.
+            att = d.get("attachment") or {}
+            if (att.get("type") == "queued_command"
+                    and (att.get("origin") or {}).get("kind") == "human"
+                    and att.get("prompt")):
+                turns.append(("human", att.get("timestamp") or ts,
+                              att["prompt"].strip()))
+            continue
         if kind == "user":
             if isinstance(content, str):
                 text = content
@@ -478,7 +490,7 @@ def cmd_finish(args):
     for _, _, x in turns:
         m = ARTIFACT_RE.search(x or "")
         if m:
-            artifact = m.group(0).rstrip(').,"\'')
+            artifact = m.group(0).rstrip(').,"\'*`_')
     meta["finished_at"] = now()
     meta["started_at"] = humans[0][0] if humans else None
     meta["transcript"] = str(tpath)

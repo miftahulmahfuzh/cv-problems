@@ -1,0 +1,1 @@
+verify_rooms.png	What the script decided, drawn back onto E-101: blue dashed outlines are the reconstructed rooms with computed areas, red circles are the receptacle symbols it counted (the legend specimen is correctly not circled), and x5 marks the one symbol the TYP. OF 5 note multiplies.
