@@ -1,0 +1,78 @@
+  <section>
+    <h2 class="section">The brief <span class="count">unsealed</span></h2>
+    <blockquote class="brief">
+      <p><code>input/E-101.png</code> is the level 1 power plan from a small office fit-out, 2339&times;1653.</p>
+      <p>I need a receptacle count off this sheet &mdash; and I need to be able to check it, so give me the position of every one you find, and an overlay I can look at.</p>
+      <p>One script in this directory. Print the count and the coordinates. Write the overlay to <code>output/E-101_marked.png</code>.</p>
+      <p>30 minutes. At the end, tell me what you'd want to fix before this ran against a real plan set.</p>
+    </blockquote>
+    <p class="note">Tier 4 &middot; archetype #11, count repeated symbols &middot; 30 min budget, 7.7 min used.
+    The sentences in italics below were the ones that did not reach the agent.</p>
+    <p class="note"><em>&ldquo;the level 1 power plan from a small office fit-out&rdquo; &middot; &ldquo;2339&times;1653&rdquo; &middot;
+    &ldquo;I need to be able to check it&rdquo; &middot; &ldquo;30 minutes&rdquo; &middot;
+    &ldquo;At the end, tell me what you'd want to fix before this ran against a real plan set.&rdquo;</em></p>
+  </section>
+
+  <section>
+    <h2 class="section">Ground truth vs what was produced</h2>
+    <div class="scroll">
+      <table class="gt">
+        <tr><th>Quantity</th><th>Ground truth</th><th>Produced</th><th></th></tr>
+        <tr><td>Symbols drawn in the plan area</td><td>7</td><td>7</td><td class="hit">match</td></tr>
+        <tr><td>Symbols drawn including the legend</td><td>8</td><td>8, legend reported separately</td><td class="hit">match</td></tr>
+        <tr><td>Devices actually specified</td><td>10</td><td>never computed &mdash; 8 was offered as the alternative</td><td class="miss">missed</td></tr>
+        <tr><td>Positions, all 7</td><td>fixture, &plusmn;0 px</td><td>worst error 1.5 px</td><td class="hit">match</td></tr>
+        <tr><td>Overlay at <code>output/E-101_marked.png</code></td><td>required</td><td>written, 7 ringed + legend marked</td><td class="hit">match</td></tr>
+        <tr><td>&ldquo;What you'd want to fix&rdquo;</td><td>required</td><td>answered, but never asked for</td><td class="miss">by luck</td></tr>
+      </table>
+    </div>
+    <div class="scroll">
+      <table class="gt">
+        <tr><th>Planted trap</th><th>Outcome</th></tr>
+        <tr><td>Legend holds one of every symbol, outside the building outline</td><td class="hit">avoided deliberately &mdash; the legend glyph was used <em>as the template</em>, and excluded by footprint containment rather than a hardcoded box</td></tr>
+        <tr><td>Banked run of three merged by an over-eager NMS radius</td><td class="hit">avoided structurally &mdash; connected components don't cluster; the cross-check sweep used 20 px suppression against 126 px spacing</td></tr>
+        <tr><td>Template cropped sloppily, with wall pixels in it</td><td class="hit">avoided &mdash; cropped from the legend component's own bbox, 3 px pad, scores 0.80&ndash;0.92</td></tr>
+        <tr><td>&ldquo;TYP. OF 4&rdquo; is the only evidence that drawn &ne; installed</td><td class="miss">named unprompted &mdash; then mis-priced. The note multiplies the one symbol beside it (<code>represents: 4</code>), so the row is 4+1+1 and the sheet specifies <strong>10</strong>. The alternative offered was 8, a number that does not exist on this sheet.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section">Verdict</h2>
+    <p class="verdict-line">Passed &mdash; correct count, correct positions, verified by the agent and not by the candidate.
+    7.7 of 30 minutes, one substantive instruction, zero corrections.</p>
+    <ul class="scores">
+      <li><span class="dim">1 &middot; Requirement capture</span><span class="grade g-weak">weak</span></li>
+      <li><span class="dim">2 &middot; Data literacy</span><span class="grade g-weak">weak</span></li>
+      <li><span class="dim">3 &middot; Decomposition</span><span class="grade g-strong">strong</span></li>
+      <li><span class="dim">4 &middot; Verification</span><span class="grade g-weak">weak</span></li>
+      <li><span class="dim">5 &middot; Correction quality</span><span class="grade g-none">not exercised</span></li>
+      <li><span class="dim">6 &middot; Domain vocabulary</span><span class="grade g-weak">weak</span></li>
+      <li><span class="dim">7 &middot; Scope control</span><span class="grade g-adequate">adequate</span></li>
+    </ul>
+    <p class="note">A cold-read subagent scored the transcript without the agent's account of the run.
+    It and the evaluation disagree on three dimensions &mdash; decomposition, data literacy and scope control.
+    Both readings are recorded in <code>EVALUATION.md</code>.</p>
+
+    <h2 class="section">Carry into the next attempt</h2>
+    <ol class="carry">
+      <li><strong>Paste the brief verbatim &mdash; every sentence, nothing summarised.</strong>
+      This run dropped an entire deliverable in transmission and got away with it.</li>
+      <li><strong>Append the verify clause:</strong> <em>&ldquo;then run it, print the count and the coordinates, and show me the overlay.&rdquo;</em>
+      This was carry-forward #1 from attempt 001 and went unactioned. Verification is now 0 for 2,
+      and 22 minutes of budget went unspent.</li>
+      <li><strong>When a fork comes back, make the agent price every branch before picking one</strong> &mdash;
+      <em>&ldquo;what's the total under each reading?&rdquo;</em> That one question surfaces the 8-vs-10 error in a line.</li>
+      <li><strong>Spend two of the unused minutes reading the input yourself, then transfer what you saw.</strong>
+      The viewer was already built in the first instruction of the session; the next step is quoting it back.</li>
+    </ol>
+    <p class="note">Full text, with the quoted instructions and the dimension-by-dimension reasoning,
+    in <code>attempts/2026-10-23-count-receptacles/EVALUATION.md</code>.</p>
+
+    <h2 class="section">Next</h2>
+    <p class="note"><strong>Archetype #12 &mdash; &ldquo;PDF plan sets: the text layer is free&rdquo;, Tier 4, 30 minutes</strong>,
+    on the vector PDF of this same sheet. It is the run <code>PROBLEM.md</code> explicitly reserved, and it attacks
+    the weakest dimension from a new angle: with <code>get_text("words")</code> the string <code>TYP. OF 4</code>
+    arrives with a bounding box attached, so the notation problem stops being something you notice and becomes
+    something you have to parse and act on &mdash; and the 10 that nobody reached this time is sitting right there.</p>
+  </section>

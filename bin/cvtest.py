@@ -388,7 +388,8 @@ def load_turns(path):
                         elif isinstance(c, list):
                             body += "".join(x.get("text", "") for x in c
                                             if isinstance(x, dict))
-                    if body.startswith("The user answered"):
+                    if body.startswith(("The user answered",
+                                        "Your questions have been answered")):
                         turns.append(("human", ts, body.strip()))
                     else:
                         turns.append(("tool_result", ts, ""))
@@ -397,8 +398,19 @@ def load_turns(path):
                                  if b.get("type") == "text")
             text = re.sub(r"<system-reminder>.*?</system-reminder>", "", text,
                           flags=re.S).strip()
-            if text.startswith(HARNESS_PREFIX):
+            if d.get("isMeta"):
+                # Skill bodies and the automatic "[Image: original WxH ...]" scale
+                # note arrive as user turns. They are the harness talking to itself;
+                # counting them as instructions inflated attempt 002's opening
+                # instruction to 2739 words and buried the one real instruction
+                # under four pages of skill text.
+                turns.append(("meta", ts, text))
+            elif text.startswith(HARNESS_PREFIX):
                 turns.append(("harness", ts, text))
+            elif "<command-name>" in text:
+                # /finish-cv-test and friends end or steer the exam; they are not
+                # instructions about the problem.
+                turns.append(("command", ts, text))
             elif text.startswith("[Request interrupted"):
                 turns.append(("interrupt", ts, text))
             elif text:
@@ -419,6 +431,21 @@ def load_turns(path):
 
 ARTIFACT_RE = re.compile(r"https://claude\.ai/\S*artifact\S*", re.I)
 
+# `cat > foo.py <<EOF`, `tee foo.txt`, `... > out/x.png` -- in bypass-permissions mode
+# the agent writes through Bash, so Write:/Edit: alone reports no files at all.
+BASH_WRITE_RE = re.compile(r"(?:>>?|\btee\b)\s+([\w./-]+\.\w{1,6})")
+
+
+def files_written(tools):
+    out = set()
+    for t in tools:
+        name, _, label = t.partition(": ")
+        if name in ("Write", "Edit", "NotebookEdit"):
+            out.add(label)
+        elif name == "Bash":
+            out.update(BASH_WRITE_RE.findall(label))
+    return out
+
 
 def cmd_finish(args):
     attempt = Path(args.attempt).resolve()
@@ -437,8 +464,12 @@ def cmd_finish(args):
     # reading time, and the harness's own artifact setup happens in it -- charging
     # either to the budget would make every run look late.
     first = datetime.fromisoformat(humans[0][0]) if humans and humans[0][0] else None
+    # The exam ends when /finish-cv-test is invoked, not at the last line of the
+    # file: everything after it is evaluation work in the same session. Without
+    # this, re-running `finish` charges the write-up to the candidate's budget.
+    stop = next((t for k, t, _ in turns if k == "command" and t), None)
     stamps = [t for _, t, _ in turns if t]
-    last = datetime.fromisoformat(stamps[-1]) if stamps else None
+    last = datetime.fromisoformat(stop or stamps[-1]) if (stop or stamps) else None
     mins = (last - first).total_seconds() / 60.0 if first and last else None
 
     artifact = None
@@ -479,8 +510,7 @@ def cmd_finish(args):
         "over_budget": bool(mins and mins > meta["minutes"]),
         "human_instructions": len(humans),
         "tool_calls": len(tools),
-        "files_written": sorted({t.split(": ", 1)[1] for t in tools
-                                 if t.startswith(("Write:", "Edit:"))}),
+        "files_written": sorted(files_written(tools)),
         "first_instruction_words": len(humans[0][1].split()) if humans else 0,
         "interrupts": sum(1 for k, _, _ in turns if k == "interrupt"),
     }, indent=2))

@@ -76,7 +76,11 @@ def main():
     out_html = "\n".join(figure(p, caps.get(p.name)) for p in outs) or \
         '<p class="empty">Nothing written to output/ yet.</p>'
 
+    frag = ROOT / "verdict.html"
+    verdict = frag.read_text() if frag.exists() else ""
+
     html = TEMPLATE.replace("{{INPUTS}}", in_html).replace("{{OUTPUTS}}", out_html) \
+                   .replace("{{VERDICT}}", verdict) \
                    .replace("{{NIN}}", str(len(inputs))).replace("{{NOUT}}", str(len(outs)))
     (ROOT / "worklog.html").write_text(html)
     print(f"worklog.html: {len(inputs)} input(s), {len(outs)} output(s), "
@@ -253,6 +257,72 @@ TEMPLATE = r"""<title>Drill Worklog 2026-10-23-1</title>
   }
   .mat[data-fit="px"] img { width: auto; max-width: none; }
 
+  table.gt {
+    border-collapse: collapse;
+    font-size: 13.5px;
+    font-variant-numeric: tabular-nums;
+    width: 100%;
+  }
+  table.gt th, table.gt td {
+    border-bottom: 1px solid var(--rule);
+    padding: 7px 14px 7px 0;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.gt th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .scroll { overflow-x: auto; }
+  blockquote.brief {
+    margin: 0;
+    padding: 2px 0 2px 18px;
+    border-left: 3px solid var(--accent);
+    max-width: 68ch;
+  }
+  blockquote.brief p { margin: 0 0 10px; }
+  blockquote.brief p:last-child { margin-bottom: 0; }
+  .hit { color: #0f7a4d; font-weight: 500; }
+  .miss { color: #b3401f; font-weight: 500; }
+  :root[data-theme="dark"] .hit, :root[data-theme="dark"] .miss { filter: brightness(1.45); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .hit,
+    :root:not([data-theme="light"]) .miss { filter: brightness(1.45); }
+  }
+  ol.carry, ul.scores { max-width: 68ch; padding-left: 20px; margin: 0; }
+  ol.carry li { margin-bottom: 9px; }
+  ul.scores { list-style: none; padding-left: 0; }
+  ul.scores li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  ul.scores .dim { flex: 1; }
+  ul.scores .grade {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .g-strong { color: #0f7a4d; }
+  .g-adequate { color: var(--ink-2); }
+  .g-weak { color: #b3401f; }
+  .g-none { color: var(--ink-2); opacity: 0.65; }
+  .verdict-line {
+    font-size: 16px;
+    font-weight: 600;
+    max-width: 68ch;
+    margin: 0;
+    text-wrap: balance;
+  }
+  p.note { margin: 0; max-width: 68ch; font-size: 13.5px; color: var(--ink-2); }
+
   .empty {
     margin: 0;
     padding: 22px;
@@ -279,6 +349,8 @@ TEMPLATE = r"""<title>Drill Worklog 2026-10-23-1</title>
     <h2 class="section">Outputs <span class="count">{{NOUT}}</span></h2>
     {{OUTPUTS}}
   </section>
+
+  {{VERDICT}}
 </div>
 
 <script>

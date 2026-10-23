@@ -228,6 +228,23 @@ a banked run with an end marker. Pixel counting gets that wrong no matter how go
 it is. **Say this out loud** — recognising it is the difference between a candidate
 who did the exercise and one who understood the domain.
 
+**Then read the note correctly, which is a second trap underneath the first.**
+"TYP. OF 4" beside a row of three symbols has two plausible readings and they give
+different totals:
+
+- *the note describes the group* → the row stands for 4 devices, one of which was
+  not drawn;
+- *the note multiplies the symbol it sits beside* → that one symbol is 4 devices and
+  the others are 1 each, so the row is 4 + 1 + 1 = 6.
+
+The second is the normal drafting reading and it is what `make_floorplan.py` emits
+(`{"kind": "banked", "represents": 4}`). Attempt 002 named the fork — full marks —
+and then offered the wrong alternative total, so the stronger answer was never on
+the table. **Naming a fork is only half of it: price every branch before choosing.**
+Say *"7 drawn, 10 specified, and here is why they differ"* — one sentence, both
+numbers, and the reason. A fork with a mis-costed branch is worse than a fork left
+unnamed, because it puts a confident wrong alternative on the record.
+
 **Verify:** overlay and count by eye on a small crop; compare with the schedule
 table if the sheet has one. Two independent counts agreeing is the only real check.
 

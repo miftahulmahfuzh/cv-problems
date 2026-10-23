@@ -90,3 +90,4 @@ and will fight the one in `.venv`.
 | Date | Problem | Tier | Budget | Result |
 |---|---|---|---|---|
 | 2026-10-22 | Detect rectangles, mark centers | 1 | 15 min | passed — `attempts/2026-10-22-rect-center/` |
+| 2026-10-23 | Count duplex receptacles on sheet E-101 | 4 | 30 min | passed in 7.7 min, agent-verified not candidate-verified — `attempts/2026-10-23-count-receptacles/` · [worklog](https://claude.ai/artifact/CbaHefVWbLvUpi8rick9zq) |
