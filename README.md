@@ -40,18 +40,32 @@ env/                   environment smoke tests (check.py, warm_models.py, demo_v
 fixtures/mock/         the four fixtures from the original test environment
 fixtures/make_floorplan.py   synthetic plan sheet -> vector PDF + raster + ground truth
 reference/             the prep kit
-attempts/<date>-<slug>/
-    PROBLEM.md         the brief            <- the exam session must never read this
-    GROUND_TRUTH.json  the expected answer  <- nor this
-    workspace/         the exam session's cwd; input/ holds the data
+attempts/<date>-<slug>/        everything the exam session must NOT see
+    PROBLEM.md         the brief
+    GROUND_TRUTH.json  the expected answer, the forks, the planted traps
     TRANSCRIPT.md      what you typed, reconstructed at finish
     EVALUATION.md      the scoring
+.runs/<date>-<n>/              the exam session's cwd — a NEUTRAL path
+    CLAUDE.md          environment + worklog + integrity rules
+    input/  output/    the data, and whatever you produce
+    worklog.html       the published artifact: input, outputs, verdict
 ```
 
-The split between `attempts/<slug>/` and `attempts/<slug>/workspace/` is the whole
-integrity mechanism: the session works inside `workspace/`, and its `CLAUDE.md`
-forbids reading the parent. Otherwise "read PROBLEM.md and do it" would be a valid
-move and the drill would teach nothing.
+Two things keep the drill honest.
+
+**The workspace path names nothing.** Claude Code is told its working directory in
+every system prompt, so a run living in `attempts/count-receptacles/` would hand over
+the answer before you said a word. Runs live in `.runs/<date>-<n>/`; the readable
+slug stays on the attempt directory, which the session never sees.
+
+**The brief is shown in a tmux pane, not written into the workspace.** You can reread
+it any time, including after resuming the session days later. The assistant cannot
+read it at all — otherwise "read the brief and do it" is a valid move and nothing is
+being measured.
+
+The terminal cannot show you images, so each run publishes a **worklog artifact**:
+the input images at boot, every output image as it is produced, and after
+`/finish-cv-test` the brief, the ground truth and the verdict underneath them.
 
 ## Environment
 
