@@ -98,22 +98,45 @@ def build(seed):
         {"name": "MECH 104", "x": vx2, "y": hy, "w": m(7.0), "h": m(6.0), "area_m2": 42.0},
     ]
 
-    # Receptacles: four placed singly, then a banked run of three carrying a
-    # "TYP. OF 4" note -- so the drawn count and the installed count differ.
-    singles = [(ox + m(2.0), oy + m(2.0)), (ox + m(2.0), oy + m(9.5)),
-               (vx1 + m(3.0), oy + m(2.0)), (vx2 + m(3.5), hy + m(4.0))]
-    for x, y in singles:
+    # Receptacles: some placed singly, then a banked run carrying a "TYP. OF n"
+    # note -- so the drawn count and the installed count differ. All three counts
+    # move with the seed, so a second run of this fixture is a genuinely new
+    # problem rather than a memory test.
+    n_singles = p.rng.randint(3, 5)
+    bank_size = p.rng.randint(2, 4)
+    typ_of = p.rng.randint(3, 6)
+    slots = [(ox + m(2.0), oy + m(2.0)), (ox + m(2.0), oy + m(9.5)),
+             (vx1 + m(3.0), oy + m(2.0)), (vx2 + m(3.5), hy + m(4.0)),
+             (vx2 + m(2.0), oy + m(2.5)), (ox + m(5.0), oy + m(6.0))]
+    for x, y in p.rng.sample(slots, n_singles):
         p.outlets.append({"x": round(x, 2), "y": round(y, 2), "kind": "single",
                           "represents": 1})
     bank_y = oy + m(10.5)
-    for i in range(3):
+    for i in range(bank_size):
         x = vx1 + m(1.5 + 1.6 * i)
         p.outlets.append({"x": round(x, 2), "y": round(bank_y, 2), "kind": "banked",
-                          "represents": 4 if i == 0 else 1})
-    p.notes.append({"text": "TYP. OF 4", "x": round(vx1 + m(1.2), 2),
+                          "represents": typ_of if i == 0 else 1})
+    p.notes.append({"text": f"TYP. OF {typ_of}", "x": round(vx1 + m(1.2), 2),
                     "y": round(bank_y - 12, 2),
-                    "means": "the leftmost banked symbol stands for 4 devices"})
+                    "means": f"the leftmost banked symbol stands for {typ_of} devices"})
     return p, (ox, oy, W, H)
+
+
+def room_of(plan, x, y):
+    """Which room a point falls in -- the join the schedule page is checked against."""
+    for r in plan.rooms:
+        if r["x"] <= x <= r["x"] + r["w"] and r["y"] <= y <= r["y"] + r["h"]:
+            return r["name"]
+    return "UNASSIGNED"
+
+
+def per_room_devices(plan):
+    """Installed device count per room, honouring the TYP. OF note."""
+    out = {}
+    for o in plan.outlets:
+        out[room_of(plan, o["x"], o["y"])] = (
+            out.get(room_of(plan, o["x"], o["y"]), 0) + o["represents"])
+    return out
 
 
 # ---------------------------------------------------------------------- drawing
@@ -195,8 +218,53 @@ def render(p, box, path, scale_note="SCALE 1:100"):
         page.draw_line((sbx + m(i), sby - 4), (sbx + m(i), sby + 4), color=INK, width=0.8)
     page.insert_text((sbx + m(5.0) + 6, sby + 3), "0        5 m", fontsize=6, color=INK)
 
+    schedule_page(doc, p)
     doc.save(str(path))
     return doc
+
+
+def schedule_page(doc, plan):
+    """Sheet E-601: the panel schedule, as a real text table on its own page.
+
+    This is the cross-sheet join Boon's own writing calls out -- the devices are
+    drawn on one sheet and quantified on another, and the quantity that goes into a
+    bid is the schedule's, not the count of drawn symbols. Rendered as real text so
+    the PDF's text layer carries it with coordinates and no OCR is needed.
+    """
+    page = doc.new_page(width=842, height=595)
+    x0, y0 = MARGIN + 20, MARGIN + 50
+    page.insert_text((x0, y0), "PANEL L1  -  RECEPTACLE SCHEDULE", fontsize=11, color=INK)
+    page.insert_text((x0, y0 + 16), "Quantities below are the installed device counts "
+                                    "and govern over symbols shown on E-101.",
+                     fontsize=6, color=THIN)
+
+    cols = [0, 60, 200, 340, 420]
+    head = ["CKT", "ROOM", "DEVICE", "QTY"]
+    ty = y0 + 44
+    page.draw_line((x0, ty - 11), (x0 + cols[-1], ty - 11), color=INK, width=0.9)
+    for c, h in zip(cols, head):
+        page.insert_text((x0 + c, ty), h, fontsize=8, color=INK)
+    page.draw_line((x0, ty + 5), (x0 + cols[-1], ty + 5), color=INK, width=0.9)
+
+    rows = sorted(per_room_devices(plan).items())
+    total, ckt = 0, 1
+    for i, (room, qty) in enumerate(rows):
+        ry = ty + 20 + i * 16
+        for c, v in zip(cols, [str(ckt), room, "DUPLEX RECEPTACLE", str(qty)]):
+            page.insert_text((x0 + c, ry), v, fontsize=7, color=INK)
+        total += qty
+        ckt += 2
+    ry = ty + 20 + len(rows) * 16 + 6
+    page.draw_line((x0, ry - 11), (x0 + cols[-1], ry - 11), color=INK, width=0.9)
+    page.insert_text((x0 + cols[1], ry), "TOTAL", fontsize=8, color=INK)
+    page.insert_text((x0 + cols[3], ry), str(total), fontsize=8, color=INK)
+
+    tb = pymupdf.Rect(842 - 200 - MARGIN, 595 - 70 - MARGIN, 842 - MARGIN, 595 - MARGIN)
+    page.draw_rect(tb, color=INK, width=1.0)
+    page.insert_text((tb.x0 + 8, tb.y0 + 16), "PANEL SCHEDULES", fontsize=8, color=INK)
+    page.insert_text((tb.x0 + 8, tb.y0 + 32), "NO SCALE", fontsize=7, color=INK)
+    page.insert_text((tb.x0 + 8, tb.y0 + 46), "SHEET E-601", fontsize=7, color=INK)
+    page.insert_text((tb.x0 + 8, tb.y0 + 60), "REV 2  2026-10-23", fontsize=6, color=THIN)
 
 
 def main():
@@ -238,6 +306,10 @@ def main():
                     "drawn count -- a pixel-perfect detector still gets the quantity "
                     "wrong, which is the point",
         },
+        "per_room_devices": per_room_devices(p),
+        "sheets": {"page_1": "E-101 level 1 power plan",
+                   "page_2": "E-601 panel schedule -- the installed quantities, "
+                             "which govern over the drawn symbols"},
         "positions": {"receptacles_pt": p.outlets, "doors_pt": p.doors,
                       "windows_pt": p.windows, "notes": p.notes},
     }

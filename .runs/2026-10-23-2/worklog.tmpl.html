@@ -1,0 +1,277 @@
+<title>Drill Worklog 2026-10-23-2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #e9ecee;
+    --panel: #f6f8f9;
+    --mount: #ffffff;
+    --ink: #14181d;
+    --ink-soft: #5c6670;
+    --ink-faint: #828d96;
+    --rule: #ccd4da;
+    --rule-firm: #aab6bf;
+    --accent: #1b5e8c;
+    --focus: #1b5e8c;
+    --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #15191d;
+      --panel: #1c2126;
+      --mount: #eef1f3;
+      --ink: #e4e9ec;
+      --ink-soft: #97a3ad;
+      --ink-faint: #76828c;
+      --rule: #2c333a;
+      --rule-firm: #3c454d;
+      --accent: #6fb3dd;
+      --focus: #6fb3dd;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #15191d;
+    --panel: #1c2126;
+    --mount: #eef1f3;
+    --ink: #e4e9ec;
+    --ink-soft: #97a3ad;
+    --ink-faint: #76828c;
+    --rule: #2c333a;
+    --rule-firm: #3c454d;
+    --accent: #6fb3dd;
+    --focus: #6fb3dd;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 32px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* ---- masthead ---- */
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 20px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--rule-firm);
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .sub {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin: 0;
+    margin-left: auto;
+  }
+
+  .sub b { font-weight: 500; color: var(--ink); }
+
+  /* ---- sections ---- */
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  h2 {
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .sec-note {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    margin: 0;
+    margin-left: auto;
+  }
+
+  /* ---- plates ---- */
+  .plate {
+    margin: 0;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .plate-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 16px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .plate-name {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .plate-meta {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+  }
+
+  .mount {
+    background: var(--mount);
+    overflow: auto;
+    padding: 10px;
+  }
+
+  .mount img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .mount.actual img {
+    width: auto;
+    max-width: none;
+  }
+
+  .plate-foot {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 14px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .zoom {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--accent);
+    background: none;
+    border: 1px solid var(--rule-firm);
+    padding: 3px 9px;
+    cursor: pointer;
+  }
+
+  .zoom:hover { border-color: var(--accent); }
+  .zoom[aria-pressed="true"] {
+    color: var(--mount);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .weight {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+  }
+
+  .caption {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    margin: 0;
+    padding: 10px 14px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .empty {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    margin: 0;
+    padding: 22px 16px;
+    border: 1px dashed var(--rule-firm);
+    text-align: center;
+  }
+
+  .empty code {
+    font-family: var(--mono);
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 560px) {
+    .plate-meta, .weight, .sub { margin-left: 0; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Drill Worklog 2026-10-23-2</h1>
+    <p class="sub">source <b>__SRC__</b> &middot; __N_IN__ input plate(s) &middot; __N_OUT__ output plate(s)</p>
+  </header>
+
+  <section id="inputs">
+    <div class="sec-head">
+      <h2>Inputs</h2>
+      <p class="sec-note">PDF pages rendered at 216 dpi, embedded as PNG</p>
+    </div>
+__IN_HTML__
+  </section>
+
+  <section id="outputs">
+    <div class="sec-head">
+      <h2>Outputs</h2>
+      <p class="sec-note">newest first</p>
+    </div>
+__OUT_HTML__
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll(".zoom").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var mount = btn.closest(".plate").querySelector(".mount");
+      var on = mount.classList.toggle("actual");
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.textContent = on ? "Fit to width" : "Actual size · " + mount.dataset.w + " px";
+    });
+  });
+</script>

@@ -1,0 +1,47 @@
+{
+  "source": "fixtures/make_floorplan.py --seed 5 (two-page vector PDF, real text layer)",
+  "the_numbers": {
+    "pages": 2,
+    "sheet_numbers": ["E-101 (level 1 power plan)", "E-601 (panel schedules)"],
+    "scale": "1:100, stated in the E-101 title block; E-601 says NO SCALE",
+    "rooms": {"OFFICE 101": 84.0, "OFFICE 102": 72.0, "STORE 103": 42.0, "MECH 104": 42.0},
+    "total_area_m2": 240.0,
+    "receptacle_symbols_drawn_on_E-101": 8,
+    "receptacle_symbols_drawn_including_legend": 9,
+    "receptacle_devices_per_room_per_schedule": {"OFFICE 101": 3, "OFFICE 102": 7, "STORE 103": 1, "MECH 104": 1},
+    "receptacle_devices_total_per_schedule": 12,
+    "explanation": "Eight symbols are drawn. The banked run in OFFICE 102 carries a 'TYP. OF 6' note, and sheet E-601 states the installed quantities explicitly -- 12 in total. 8 is what the plan draws; 12 is what gets installed and bid."
+  },
+  "forks_left_open_in_the_brief": [
+    {
+      "fork": "The brief says 'the sheet number and scale', singular. There are two sheets.",
+      "correct": "Report both, or report E-101's and say why E-601 has none.",
+      "scoring": "Silently answering for page 1 only, without ever noting a page 2 exists, is the primary failure mode of this problem and should be called in the evaluation even when every number reported is right."
+    },
+    {
+      "fork": "'Receptacle quantity per room' -- counted symbols, or scheduled devices?",
+      "correct": "The schedule governs. Sheet E-601 says so in as many words: 'Quantities below are the installed device counts and govern over symbols shown on E-101.'",
+      "scoring": "Per-room counts of 3/7/1/1 totalling 12 = full marks. Counting symbols per room and reporting 8 = the trap landed. Reporting both, labelled, and naming which one a bid uses = the strongest available answer."
+    },
+    {
+      "fork": "Room areas -- read the printed label, or measure the geometry?",
+      "correct": "Either. The labels say '84 m2' etc. and the wall geometry is exact vector data.",
+      "scoring": "Reading the label is fine and fast. Measuring from the vector paths and agreeing with the label is a free cross-check and worth saying out loud. Measuring and getting a different number without noticing is a real miss."
+    }
+  ],
+  "traps_planted": [
+    "The set is two pages and the brief implies one. Only `len(doc)` or a page loop reveals it.",
+    "Rasterising and doing pixel CV is the expensive wrong road: every string on both sheets arrives from get_text('words') WITH a bounding box, and page 1 carries 66 exact vector paths from get_drawings().",
+    "The legend on E-101 holds one of every symbol, outside the building outline -- it inflates any symbol count by one.",
+    "'TYP. OF 6' sits above the banked run; it is the only on-plan evidence that drawn != installed, and it is parseable text, not pixels.",
+    "E-601's own note states that the schedule governs. A candidate who reads the text layer has that sentence handed to them."
+  ],
+  "what_a_strong_answer_looks_like": [
+    "Opens the PDF, prints the page count and checks for a text layer BEFORE any image work -- and says why.",
+    "Pulls room names and areas from get_text('words'), using the bounding boxes to associate a label with a room.",
+    "Finds page 2, parses the schedule table, and uses it for the quantities.",
+    "Reports both numbers labelled -- 8 drawn, 12 scheduled -- and says a bid uses 12.",
+    "Answers the closing question honestly: areas and scale are solid, symbol counts are not, the schedule is."
+  ],
+  "verification_available_to_the_candidate": "The schedule's own TOTAL row (12) against the sum of its per-room rows, and the room areas against the printed labels. Two independent agreements, both free from the text layer."
+}
