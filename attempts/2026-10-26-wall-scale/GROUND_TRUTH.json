@@ -1,0 +1,64 @@
+{
+  "source": "fixtures/make_floorplan.py --seed 11 --dpi 200, page 1 only, rendered to E-101.png (2339x1653 px)",
+  "scale": {
+    "drawing": "1:100",
+    "stated_in": "title block, bottom right: 'SCALE 1:100'",
+    "also_recoverable_from": "the 5 m scale bar, bottom left, ticked every metre -- the only route available here, since no PDF/page geometry was handed over",
+    "pixels_per_metre_at_200dpi": 78.7403,
+    "acceptable_tolerance": "within +/-10% of 78.74 px/m (71-87) counts as a correctly recovered scale"
+  },
+  "the_numbers": {
+    "primary_intended_reading": {
+      "walls": "all 15 segments, exterior shell + 3 interior partitions, net of door/window openings",
+      "total_wall_length_m": 127.7,
+      "acceptable_range_m": [112, 143],
+      "total_floor_area_m2": 240.0,
+      "acceptable_range_m2": [216, 264],
+      "per_room_area_m2": {"OFFICE 101": 84.0, "OFFICE 102": 72.0, "STORE 103": 42.0, "MECH 104": 42.0}
+    },
+    "alternate_readings_if_named_and_consistent": [
+      {
+        "fork": "walls",
+        "choice": "exterior envelope only, no interior partitions",
+        "total_wall_length_m": 59.4,
+        "acceptable_range_m": [50, 69],
+        "note": "64.0 m perimeter minus the one exterior door (1.0 m) and two windows (1.8 m each)"
+      },
+      {
+        "fork": "openings",
+        "choice": "gross run, door/window gaps counted as wall (e.g. Hough segments merged across the gap)",
+        "total_wall_length_m_all_walls": 135.0,
+        "total_wall_length_m_exterior_only": 64.0,
+        "note": "only acceptable if the candidate says out loud that a door or window interrupts that run and that they chose not to subtract it -- an unflagged gross number is the trap, not a fork"
+      }
+    ],
+    "unacceptable": "a total wall length under ~50 m or over ~145 m means the scale factor is wrong, not the wall count -- flag it as a scale error, not a measurement error",
+    "floor_area_has_no_real_fork": "walls are drawn as zero-width lines in this fixture, so there is no gross/net room-area distinction to find; 240.0 m2 (or the matching per-room breakdown) is the only defensible total"
+  },
+  "forks_left_open_in_the_brief": [
+    {
+      "fork": "Does 'the walls' mean the exterior shell only, or every wall including interior partitions?",
+      "correct": "Both are defensible. The brief says 'the walls' on purpose.",
+      "scoring": "Reporting 127.7 m without ever noticing the ambiguity is fine if it's the number an interviewer would actually want (it is -- 'the walls' in a takeoff context defaults to all of them). Reporting 59.4 m having explicitly scoped it to the envelope is also full marks. Reporting 59.4 m with no stated scope, expecting it to be read as 'all walls', is a miss -- the number alone doesn't communicate which was measured, which is the same lesson as the receptacle drill's legend fork."
+    },
+    {
+      "fork": "Do door/window openings reduce the measured wall run?",
+      "correct": "Net (subtracting openings) is the geometrically correct reading and what the fixture's own ground truth uses.",
+      "scoring": "Net length with no commentary = correct, no bonus needed, it's the default expectation. Gross length (135.0 or 64.0) WITH an explicit note that it includes door/window gaps = acceptable, shows understanding of what maxLineGap did. Gross length with no mention that a door sits in that run = the trap landed; this is the #5 'merged across the opening' failure from the ladder, happening here as a 4-10% overcount instead of the dramatic one `make_floorplan.py` usually produces."
+    }
+  ],
+  "traps_planted": [
+    "The sheet is raster only -- no PDF, no get_text()/get_drawings() shortcut. Scale must come from pixels: the scale bar (reliable) or the stated '1:100' text (only useful if the candidate also knows or infers the render DPI, which nothing on the sheet states directly -- the scale bar is the intended route).",
+    "Three of the fifteen wall segments are interior partitions with their own doors; a wall detector that only looks at the building's outer contour will silently produce the exterior-only number without the candidate having chosen it.",
+    "Door and window openings split what Hough regards as collinear segments; a generous maxLineGap merges straight through a doorway and inflates the total by ~4-10%, small enough to not look obviously wrong."
+  ],
+  "what_a_strong_answer_looks_like": [
+    "States which scale reference it used and prints the derived pixels-per-metre before trusting any measurement.",
+    "Sanity-checks the scale against something known on the sheet (a door is ~0.9-1.0 m) before reporting final numbers.",
+    "States explicitly whether interior partitions are included in the wall total.",
+    "Either subtracts door/window gaps from wall runs, or says it didn't and why.",
+    "Overlays the detected walls and room boundaries on the original image and looks at it before trusting the numbers.",
+    "Sanity-checks total floor area against total building footprint (20 m x 12 m = 240 m2 here, which happens to equal the sum of the rooms since there are no corridors) -- noticing that coincidence out loud is a bonus, not required."
+  ],
+  "verification_available_to_the_candidate": "The overlay: four room rectangles, 15 wall segments, and the scale bar with its tick marks all visible in one image. Pixel measurements can be eyeballed against the scale bar directly."
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "wall-scale",
+  "title": "Recover scale, measure wall length and room area",
+  "date": "2026-10-26",
+  "run_id": "2026-10-26-1",
+  "minutes": 30,
+  "created_at": "2026-10-26T01:00:12+00:00",
+  "spawned_at": "2026-10-26T01:02:10+00:00",
+  "started_at": null,
+  "finished_at": null,
+  "session_name": "cvtest-2026-10-26-1",
+  "workspace": "/home/miftah/cv-problems/.runs/2026-10-26-1",
+  "window": "@10",
+  "pane": "%10",
+  "brief_pane": "%11",
+  "artifact": null
+}
