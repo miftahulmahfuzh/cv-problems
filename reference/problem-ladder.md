@@ -172,6 +172,23 @@ something deterministic for *facts*, then validate.
 tell me how many of them there are. Asking the VLM to count is how you ship a wrong
 number."*
 
+**Know what the cached checkpoint actually is before you trust its output format.**
+`Salesforce/blip-image-captioning-base` is captioning-only — it is *not* VQA-tuned.
+Verified against it in this kit:
+
+| prompt | returns |
+|---|---|
+| *(unconditioned)* | "a white background with a colorful geometric pattern" |
+| `"a photo of"` | "a photo of a group of different shapes" |
+| `"there are a total of"` | **"there are a total of 10 different shapes"** — the true count is 6 |
+| `"how many shapes are in this image?"` | echoes the question back, no answer at all |
+
+Note the failure *shapes*: asking it a question does not error, it silently returns
+the question — which looks like a working call if nothing checks it. And the moment
+the prompt invites a number, it invents one with total confidence. There is no prompt
+variant that reliably gets a correct count out of this checkpoint. Use `blip-vqa-base`
+if you genuinely need VQA — and verify which one is cached before building on it.
+
 *Data: `[mock] photo_landscape.jpg`; worked solution in `reference/snippets/pipeline.py`*
 
 ### 9. Perception → structured JSON

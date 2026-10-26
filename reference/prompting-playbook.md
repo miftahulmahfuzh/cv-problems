@@ -106,10 +106,30 @@ then expectation. Now it is one fix instead of three guesses.
 objects`, and you move on. Seven is only right if you counted seven yourself. Open
 the overlay.
 
+**Accepting the option labelled "(Recommended)".** When the agent asks you a
+clarifying question, it will often mark one answer as recommended. That label is its
+opinion about *implementation cleanliness* — it has no idea what the exercise is for,
+what the interviewer is probing, or which branch demonstrates more. Before accepting
+any clarifying answer, ask yourself one question: **does this change what gets
+measured, or only how it gets built?** If two options differ in what the deliverable
+*demonstrates*, that is your call and not the agent's. The cheapest counter is four
+words: *"why do you recommend that one?"* — it costs one line and surfaces the
+tradeoff the label hid. Observed twice: attempt 001 (a clarifying answer silently
+loosened "rectangular" to "any contour") and attempt 006 (a recommended caption
+source removed the only model call from a model-tier problem).
+
 **Letting it build infrastructure.** Claude defaults to engineering: argparse, a
 `main()`, a config, error handling for cases that cannot occur. In a 30-minute test
 that is pure loss. Say "one short script, print results, no CLI" in the first
 message — and it is in the workspace `CLAUDE.md` precisely so you do not have to.
+
+**Verifying without stating the number.** *"I checked, it's correct"* is
+unfalsifiable from a transcript. An interviewer cannot distinguish a candidate who
+counted six from one who read six off the agent's table and nodded — so an
+independent count that is not reported independently buys none of the credit it
+earned. Say the number, and say the breakdown: *"I count 6 by eye — 2 circles, 2
+rectangles, 1 triangle, 1 arrow. Your table matches."* The check was the expensive
+part; the clause that makes it legible is free.
 
 **Not looking at the input yourself.** You cannot tell whether a result is right if
 you never looked at the data. Thirty seconds with the image is the cheapest
@@ -129,6 +149,9 @@ in silence shows them nothing. Narrate the approach and the tradeoff while it ty
 - *"Let me look at the image first."* — then actually describe what you see.
 - *"This is computer-drawn, so I'll do it deterministically rather than reach for a
   model."*
+- *"I'll use the model for what it's good at — telling me what this *is* — and
+  something deterministic for anything that has to be a number."* — the perception /
+  facts split, said as a reason rather than a tool list.
 - *"Before I trust that number, let me have it write the mask out and look at it."*
 - *"That's a fork: a thick outline has an inner and an outer edge. I want one
   detection per drawn object, so — external contours only."*
