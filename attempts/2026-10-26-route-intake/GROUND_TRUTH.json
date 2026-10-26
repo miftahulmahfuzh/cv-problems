@@ -1,0 +1,55 @@
+{
+  "source": "fixtures/mock/document_table.png, copied to input/intake_07.png",
+  "true_category": "document (a table of printed text -- rows and columns), not a chart, not a shapes diagram, not a photograph",
+  "model": "openai/clip-vit-base-patch32, cached locally, loaded via transformers (CLIPModel/CLIPProcessor), zero grad, CPU",
+  "verified_runs_against_this_image": [
+    {
+      "label_set": {"chart": "a candlestick stock chart", "document": "a printed financial document with a table", "shapes": "simple colored geometric shapes", "photo": "a landscape photograph"},
+      "result": {"chart": 0.908, "document": 0.091, "shapes": 0.0, "photo": 0.0},
+      "verdict": "WRONG, confidently -- financial wording in the document label pulls it toward the chart embedding"
+    },
+    {
+      "label_set": {"chart": "a candlestick stock chart", "document": "a scanned page of a paper document", "shapes": "simple colored geometric shapes", "photo": "a landscape photograph"},
+      "result": {"chart": 0.966, "document": 0.034, "shapes": 0.001, "photo": 0.0},
+      "verdict": "WRONG, confidently -- 'scanned page' reads as document-about-content, not document-in-appearance; still loses to chart"
+    },
+    {
+      "label_set": {"chart": "a candlestick stock chart", "document": "a printed invoice or financial table", "shapes": "simple colored geometric shapes", "photo": "a landscape photograph"},
+      "result": {"chart": 0.409, "document": 0.591, "shapes": 0.0, "photo": 0.0},
+      "verdict": "correct, but only a 59/41 split -- not comfortably confident either"
+    },
+    {
+      "label_set": {"chart": "a financial chart", "document": "a financial document with numbers", "shapes": "a diagram of shapes", "photo": "a photograph"},
+      "result": {"chart": 0.305, "document": 0.694, "shapes": 0.0, "photo": 0.0},
+      "verdict": "correct, more comfortably (69/31)"
+    }
+  ],
+  "scoring": {
+    "full_marks": "Predicted category is 'document' (or an equivalent label the candidate invented for the same thing -- 'table', 'spreadsheet-like page', etc. all fine), the FULL probability vector is printed (not just the winner), and reasonable confidence (candidate does not have to hit 0.591/0.694 exactly -- anything where document outranks the alternatives is a correct read, as long as it's shown, not asserted).",
+    "bonus": "Notices that confidence is middling-to-low for a supposedly obvious category, or that initial prompt wording gave the wrong answer and iterates -- either observation is the senior move this archetype is testing for.",
+    "the_trap_landing": "Predicted category is 'chart' (or equivalent) with high stated confidence (>0.8), OR the candidate reports only an argmax label with no probability vector at all -- that is the failure the ladder calls out by name: 'a 0.34/0.33 split is not a classification', except here it is the inverse shape of the same mistake (confidently wrong rather than uncertain).",
+    "no_credit": "Classifying by reading the file with a general vision pass and asserting an answer with no model run, no probabilities, and no code -- the brief explicitly asked for the model's judgement and a confidence breakdown, not an eyeballed guess."
+  },
+  "handler_name": {
+    "acceptable": "Any sensible name for 'the thing you'd call for a table/document image' -- e.g. 'table/grid extractor', 'document structure parser', 'OCR pipeline' (even though this env has no OCR, naming the handler correctly doesn't require running it). Scored on whether the named handler matches the predicted category, not on its exact wording.",
+    "not_required": "Actually running the downstream handler. The brief only asks for the routing decision, not the table extraction itself -- that is archetype #4, covered separately."
+  },
+  "forks_left_open_in_the_brief": [
+    {
+      "fork": "What should the candidate categories be, and how many?",
+      "correct": "Unconstrained on purpose -- any label set that could plausibly route this intake folder is fine.",
+      "scoring": "The category choice is not what's graded. The prompt WORDING inside whatever categories they pick is what's graded, because that's where the planted trap sits (see verified_runs_against_this_image)."
+    }
+  ],
+  "traps_planted": [
+    "The test image is a financial-looking table. Any prompt for the 'document' category that leans on financial vocabulary or 'scanned page' framing pulls the embedding toward the chart label instead of describing what a table actually looks like (ruled rows and columns of small printed glyphs).",
+    "The wrong answer in this fixture doesn't look wrong -- it shows up as >0.9 confidence, not a nervous split, so a candidate who only checks 'is confidence high enough' will ship it."
+  ],
+  "what_a_strong_answer_looks_like": [
+    "Writes prompts describing visual appearance (ruled grid, rows of small glyphs, lines and tick marks, blob of color) rather than semantic content (invoice, finance, stock).",
+    "Prints the full softmax vector, not just the winning label.",
+    "If the first attempt comes back wrong or surprisingly confident, revises the prompt and re-measures rather than trusting the first run.",
+    "Names a handler that matches whatever category won."
+  ],
+  "verification_available_to_the_candidate": "None built in on purpose -- there is no overlay or schedule table to check a classification against, the way earlier drills had. The only check available is printing the full distribution and noticing whether it's surprising, which is itself the skill being tested."
+}

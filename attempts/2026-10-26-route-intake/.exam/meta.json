@@ -1,0 +1,17 @@
+{
+  "slug": "route-intake",
+  "title": "Classify an intake image by type and pick a handler",
+  "date": "2026-10-26",
+  "run_id": "2026-10-26-2",
+  "minutes": 30,
+  "created_at": "2026-10-26T02:07:04+00:00",
+  "spawned_at": "2026-10-26T02:07:44+00:00",
+  "started_at": null,
+  "finished_at": null,
+  "session_name": "cvtest-2026-10-26-2",
+  "workspace": "/home/miftah/cv-problems/.runs/2026-10-26-2",
+  "window": "@15",
+  "pane": "%16",
+  "brief_pane": "%17",
+  "artifact": null
+}
