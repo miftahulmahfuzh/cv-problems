@@ -60,5 +60,19 @@
     "Overlays the detected walls and room boundaries on the original image and looks at it before trusting the numbers.",
     "Sanity-checks total floor area against total building footprint (20 m x 12 m = 240 m2 here, which happens to equal the sum of the rooms since there are no corridors) -- noticing that coincidence out loud is a bonus, not required."
   ],
-  "verification_available_to_the_candidate": "The overlay: four room rectangles, 15 wall segments, and the scale bar with its tick marks all visible in one image. Pixel measurements can be eyeballed against the scale bar directly."
+  "verification_available_to_the_candidate": "The overlay: four room rectangles, 15 wall segments, and the scale bar with its tick marks all visible in one image. Pixel measurements can be eyeballed against the scale bar directly.",
+  "examiner_correction_added_2026-10-26": {
+    "bug": "fixtures/make_floorplan.py's build() called wall()/wall_with_opening() three separate times on the identical south-wall coordinates (ox,oy)-(ox+W,oy): once as a plain whole wall, then twice more independently net of each of the two windows. All three got appended to p.walls, so the ground truth's own total_wall_m triple-booked that one physical wall -- it was never recoverable from the rendered raster, which only ever shows that wall once.",
+    "evidence": "sum of the 15 appended segments as originally coded reproduces 127.7 m exactly by hand; the correctly-deduplicated wall list has 13 segments, not 15, and nets to 87.7 m -- confirmed by re-running the (now fixed) generator at the same seed/dpi: `{'segment_count_after_openings': 13, 'total_length_m': 87.7}`, rooms total_area_m2 unchanged at 240.0.",
+    "corrected_primary_reading": {
+      "total_wall_length_m_net_all_walls": 87.7,
+      "total_wall_length_m_gross_all_walls": 95.0,
+      "total_wall_length_m_net_exterior_only": 59.4,
+      "total_wall_length_m_gross_exterior_only": 64.0,
+      "note": "exterior-only figures are unchanged from the original ground truth -- the bug was isolated to how the windowed south wall's segments were summed, not to the exterior-only arithmetic."
+    },
+    "fix_applied": "fixtures/make_floorplan.py: wall_with_opening() now delegates to a new wall_with_openings() that cuts a wall against a list of openings at once; the exterior shell's two windows are now a single wall_with_openings() call instead of a vestigial whole-wall call plus two independent single-opening calls. Re-running `make_floorplan.py --seed 11 --dpi 200` after the fix renders a visually unchanged sheet (verified) with a correct ground truth.",
+    "scope": "this bug is seed-independent (wall geometry is fixed in build(); only outlet placement is seeded), so it would have affected every future wall-scale attempt, not just this one -- fixed at the source rather than only patched here.",
+    "grading_note_for_this_attempt": "grade the candidate's wall-length answer against the corrected numbers above, not against total_wall_length_m / acceptable_range_m in the primary_intended_reading block above, which are the pre-fix (inflated) figures."
+  }
 }

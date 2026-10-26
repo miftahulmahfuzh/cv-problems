@@ -1,0 +1,178 @@
+{
+  "scale": {
+    "method": "graphic scale bar at bottom-left: 6 tick marks spanning 0-5 m",
+    "bar_span_px": 394.0,
+    "bar_span_m": 5.0,
+    "px_per_m": 78.8,
+    "m_per_px": 0.01269,
+    "cross_check": "sheet also prints 'SCALE 1:100' but that ratio alone can't be converted to px without knowing print DPI, so the graphic bar is the derivation source; the printed room-area labels below independently confirm it"
+  },
+  "wall_length": {
+    "total_m": 94.96,
+    "total_px": 7483.0,
+    "scope": "exterior perimeter + all interior partitions (incl. Store/Mech divider), centerlines, door openings counted as wall per instruction",
+    "segments": [
+      {
+        "name": "top",
+        "p1_px": [
+          193.5,
+          277.0
+        ],
+        "p2_px": [
+          1768.5,
+          277.0
+        ],
+        "length_px": 1575.0,
+        "length_m": 19.987,
+        "note": null
+      },
+      {
+        "name": "bottom",
+        "p1_px": [
+          193.5,
+          1222.5
+        ],
+        "p2_px": [
+          1768.5,
+          1222.5
+        ],
+        "length_px": 1575.0,
+        "length_m": 19.987,
+        "note": "door opening along this run treated as wall (measured corner-to-corner)"
+      },
+      {
+        "name": "left",
+        "p1_px": [
+          193.5,
+          277.0
+        ],
+        "p2_px": [
+          193.5,
+          1222.5
+        ],
+        "length_px": 945.5,
+        "length_m": 11.999,
+        "note": null
+      },
+      {
+        "name": "right",
+        "p1_px": [
+          1768.5,
+          277.0
+        ],
+        "p2_px": [
+          1768.5,
+          1222.5
+        ],
+        "length_px": 945.5,
+        "length_m": 11.999,
+        "note": null
+      },
+      {
+        "name": "partition_101_102",
+        "p1_px": [
+          745.5,
+          277.0
+        ],
+        "p2_px": [
+          745.5,
+          1222.5
+        ],
+        "length_px": 945.5,
+        "length_m": 11.999,
+        "note": "door opening along this run treated as wall (measured corner-to-corner)"
+      },
+      {
+        "name": "partition_102_store103",
+        "p1_px": [
+          1217.5,
+          277.0
+        ],
+        "p2_px": [
+          1217.5,
+          1222.5
+        ],
+        "length_px": 945.5,
+        "length_m": 11.999,
+        "note": null
+      },
+      {
+        "name": "divider_store_mech",
+        "p1_px": [
+          1217.5,
+          749.5
+        ],
+        "p2_px": [
+          1768.5,
+          749.5
+        ],
+        "length_px": 551.0,
+        "length_m": 6.992,
+        "note": "door opening along this run treated as wall (measured corner-to-corner)"
+      }
+    ]
+  },
+  "room_area": {
+    "total_m2_measured": 239.82,
+    "total_m2_printed_labels": 240,
+    "rooms": [
+      {
+        "name": "OFFICE_101",
+        "bbox_px": [
+          193.5,
+          277.0,
+          745.5,
+          1222.5
+        ],
+        "width_m": 7.005,
+        "height_m": 11.999,
+        "area_m2_measured": 84.05,
+        "area_m2_printed_label": 84,
+        "discrepancy_m2": 0.05
+      },
+      {
+        "name": "OFFICE_102",
+        "bbox_px": [
+          745.5,
+          277.0,
+          1217.5,
+          1222.5
+        ],
+        "width_m": 5.99,
+        "height_m": 11.999,
+        "area_m2_measured": 71.87,
+        "area_m2_printed_label": 72,
+        "discrepancy_m2": -0.13
+      },
+      {
+        "name": "STORE_103",
+        "bbox_px": [
+          1217.5,
+          277.0,
+          1768.5,
+          749.5
+        ],
+        "width_m": 6.992,
+        "height_m": 5.996,
+        "area_m2_measured": 41.93,
+        "area_m2_printed_label": 42,
+        "discrepancy_m2": -0.07
+      },
+      {
+        "name": "MECH_104",
+        "bbox_px": [
+          1217.5,
+          749.5,
+          1768.5,
+          1222.5
+        ],
+        "width_m": 6.992,
+        "height_m": 6.003,
+        "area_m2_measured": 41.97,
+        "area_m2_printed_label": 42,
+        "discrepancy_m2": -0.03
+      }
+    ],
+    "note": "measured-from-geometry and sum-of-printed-labels are both reported for discussion at session end"
+  }
+}

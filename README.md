@@ -92,3 +92,4 @@ and will fight the one in `.venv`.
 | 2026-10-22 | Detect rectangles, mark centers | 1 | 15 min | passed — `attempts/2026-10-22-rect-center/` |
 | 2026-10-23 | Count duplex receptacles on sheet E-101 | 4 | 30 min | passed in 7.7 min, agent-verified not candidate-verified — `attempts/2026-10-23-count-receptacles/` · [worklog](https://claude.ai/artifact/CbaHefVWbLvUpi8rick9zq) |
 | 2026-10-23 | Structure a two-sheet plan set into bid data | 4 | 30 min | passed in 22.2 min, agent-verified not candidate-verified — `attempts/2026-10-23-plan-set-json/` · [worklog](https://claude.ai/artifact/7vkbwV8iMYZNkGiYEqvsgV) |
+| 2026-10-26 | Recover scale, measure wall length and room area on sheet E-101 | 4 | 30 min | passed in 14.5 min, agent-verified not candidate-verified — `attempts/2026-10-26-wall-scale/` · [worklog](https://claude.ai/artifact/PpdtYaUaZKVwDCgR5E4Gyn) |

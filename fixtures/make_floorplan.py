@@ -53,20 +53,38 @@ class Plan:
         Openings are why `maxLineGap` is a domain decision: this is one wall with a
         hole in it, not two walls, and the ground truth counts it as one.
         """
+        return self.wall_with_openings(x0, y0, x1, y1, [(at, width)], kind)
+
+    def wall_with_openings(self, x0, y0, x1, y1, openings, kind):
+        """A wall interrupted by one or more doors/windows -- net segments and symbols.
+
+        One `wall()` call per opening (plus a vestigial whole-wall call) was the bug
+        this replaced: calling the single-opening version twice on the same wall for
+        two windows appended three overlapping copies of that wall to `self.walls`,
+        so the ground truth's own total length triple-booked it. A wall with several
+        openings has to be cut once, against all of them together.
+        """
         horiz = abs(y1 - y0) < 1e-6
         length = (x1 - x0) if horiz else (y1 - y0)
-        a, b = at - width / 2, at + width / 2
-        if horiz:
-            self.wall(x0, y0, x0 + a, y0)
-            self.wall(x0 + b, y0, x1, y1)
-            cx, cy = x0 + at, y0
-        else:
-            self.wall(x0, y0, x1, y0 + a)
-            self.wall(x0, y0 + b, x1, y1)
-            cx, cy = x0, y0 + at
-        rec = {"x": round(cx, 2), "y": round(cy, 2), "width_m": round(width / PT_PER_M, 2),
-               "orientation": "horizontal" if horiz else "vertical"}
-        (self.doors if kind == "door" else self.windows).append(rec)
+        cuts = sorted((at - width / 2, at + width / 2) for at, width in openings)
+        cursor = 0.0
+        for a, b in cuts:
+            if a > cursor:
+                if horiz:
+                    self.wall(x0 + cursor, y0, x0 + a, y0)
+                else:
+                    self.wall(x0, y0 + cursor, x1, y0 + a)
+            cursor = max(cursor, b)
+        if cursor < length:
+            if horiz:
+                self.wall(x0 + cursor, y0, x1, y1)
+            else:
+                self.wall(x0, y0 + cursor, x1, y1)
+        for at, width in openings:
+            cx, cy = (x0 + at, y0) if horiz else (x0, y0 + at)
+            rec = {"x": round(cx, 2), "y": round(cy, 2), "width_m": round(width / PT_PER_M, 2),
+                   "orientation": "horizontal" if horiz else "vertical"}
+            (self.doors if kind == "door" else self.windows).append(rec)
         return length
 
 
@@ -76,13 +94,12 @@ def build(seed):
     W, H = m(20.0), m(12.0)          # 20 m x 12 m building
     ox, oy = MARGIN + 30, MARGIN + 60
 
-    # Exterior shell, with two windows on the long walls and the entry door.
-    p.wall(ox, oy, ox + W, oy)
+    # Exterior shell, with two windows on one long wall and the entry door on the other.
+    p.wall_with_openings(ox, oy, ox + W, oy,
+                          [(m(6.0), m(1.8)), (m(14.0), m(1.8))], kind="window")
     p.wall_with_opening(ox, oy + H, ox + W, oy + H, at=m(4.0), width=m(1.0), kind="door")
     p.wall(ox, oy, ox, oy + H)
     p.wall(ox + W, oy, ox + W, oy + H)
-    p.wall_with_opening(ox, oy, ox + W, oy, at=m(6.0), width=m(1.8), kind="window")
-    p.wall_with_opening(ox, oy, ox + W, oy, at=m(14.0), width=m(1.8), kind="window")
 
     # Interior partitions. Two vertical, one horizontal in the right half.
     vx1, vx2 = ox + m(7.0), ox + m(13.0)
