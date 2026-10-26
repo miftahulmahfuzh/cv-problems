@@ -141,8 +141,17 @@ softmax over cosine similarities; branch on the argmax. This is the *router* tha
 makes a multimodal pipeline look designed rather than hardcoded.
 
 **The trap:** the prompt template matters more than people expect; bare label words
-are measurably worse than `"a photo of a ..."`. And CLIP cannot count or localise —
-do not route counting through it.
+are measurably worse than `"a photo of a ..."`. The sharper version: a prompt that
+describes what the image *is about* (finance, invoice, scanned paper) rather than
+what it *looks like* (ruled grid, rows of small glyphs) can pull the embedding
+toward an unrelated class that happens to share the vocabulary — and the wrong
+answer that results doesn't look wrong, it comes back at >90% confidence, not a
+nervous split. A candidate who only checks "is confidence high enough" ships it.
+The fix costs nothing: write every class prompt as an appearance description, and
+when one class crosses 90%+ on the first run, ablate the most content-specific
+prompt in the winning class before trusting it — if the number barely moves, it
+wasn't the leak; if it collapses, it was. And CLIP cannot count or localise — do
+not route counting through it.
 
 **Verify:** print the full probability vector, not just the argmax. A 0.34/0.33
 split is not a classification.

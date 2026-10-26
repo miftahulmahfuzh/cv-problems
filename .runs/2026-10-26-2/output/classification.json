@@ -1,0 +1,16 @@
+{
+  "image": "input/intake_07.png",
+  "model": "openai/clip-vit-base-patch32",
+  "method": "clip_zero_shot",
+  "predicted_type": "table",
+  "confidence": 0.992,
+  "handler": "ocr_table_extractor",
+  "confidence_breakdown": {
+    "chart": 0.002,
+    "diagram": 0.0001,
+    "photo": 0.0,
+    "scanned_document": 0.0004,
+    "table": 0.992,
+    "other": 0.0054
+  }
+}

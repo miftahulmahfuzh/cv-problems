@@ -1,0 +1,120 @@
+{
+  "per_prompt_similarity": [
+    {
+      "class": "table",
+      "prompt": "a financial statement table with rows of figures",
+      "softmax_weight": 0.7403
+    },
+    {
+      "class": "table [LEAKY]",
+      "prompt": "a trade confirmation table listing tickers, quantities and prices",
+      "softmax_weight": 0.2222
+    },
+    {
+      "class": "table",
+      "prompt": "a spreadsheet with numbers and columns",
+      "softmax_weight": 0.0142
+    },
+    {
+      "class": "other",
+      "prompt": "an image that does not fit chart, diagram, photo, scanned document, or table categories",
+      "softmax_weight": 0.0112
+    },
+    {
+      "class": "table",
+      "prompt": "a table of data with rows and columns",
+      "softmax_weight": 0.0107
+    },
+    {
+      "class": "chart",
+      "prompt": "a chart or graph showing data trends",
+      "softmax_weight": 0.0007
+    },
+    {
+      "class": "chart",
+      "prompt": "a line chart with axes",
+      "softmax_weight": 0.0003
+    },
+    {
+      "class": "scanned_document",
+      "prompt": "a scanned document with blocks of text",
+      "softmax_weight": 0.0002
+    },
+    {
+      "class": "chart",
+      "prompt": "a bar chart",
+      "softmax_weight": 0.0001
+    },
+    {
+      "class": "scanned_document",
+      "prompt": "a scanned page of printed paragraph text",
+      "softmax_weight": 0.0001
+    },
+    {
+      "class": "other",
+      "prompt": "a miscellaneous image",
+      "softmax_weight": 0.0001
+    },
+    {
+      "class": "diagram",
+      "prompt": "a technical diagram with labeled parts",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "diagram",
+      "prompt": "a schematic drawing",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "diagram",
+      "prompt": "an architectural or engineering diagram",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "scanned_document",
+      "prompt": "a photocopy of a text document",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "chart",
+      "prompt": "a pie chart with statistics",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "photo",
+      "prompt": "a photo taken with a camera",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "photo",
+      "prompt": "a photograph of a real-world scene",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "diagram",
+      "prompt": "a flowchart with boxes and arrows",
+      "softmax_weight": 0.0
+    },
+    {
+      "class": "photo",
+      "prompt": "a picture of people or objects in real life",
+      "softmax_weight": 0.0
+    }
+  ],
+  "class_confidence_with_leaky_prompt": {
+    "chart": 0.0008,
+    "diagram": 0.0,
+    "photo": 0.0,
+    "scanned_document": 0.0002,
+    "table": 0.9967,
+    "other": 0.0023
+  },
+  "class_confidence_generic_prompts_only": {
+    "chart": 0.002,
+    "diagram": 0.0001,
+    "photo": 0.0,
+    "scanned_document": 0.0004,
+    "table": 0.992,
+    "other": 0.0054
+  }
+}
