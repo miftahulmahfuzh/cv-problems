@@ -1,0 +1,49 @@
+{
+  "source": "fixtures/mock/shapes.png, copied to input/sample_14.png",
+  "true_shape_count": 6,
+  "verification": [
+    "ladder reference (reference/problem-ladder.md, archetype #2) states shapes.png has 6 known shapes",
+    "independent cv2 recount this session: GaussianBlur -> THRESH_BINARY_INV|OTSU -> MORPH_CLOSE -> findContours(RETR_EXTERNAL) -> area filter at 0.1% of frame -> 6 contours survive, vertex counts [4,4,8,4,3,8] (quad, quad, ~circle, quad, triangle, ~circle)"
+  ],
+  "caption_reference_outputs": {
+    "model": "Salesforce/blip-image-captioning-base, BlipForConditionalGeneration, CPU, run in this session against sample_14.png",
+    "unconditioned": "a white background with a colorful geometric pattern",
+    "\"a photo of\"": "a photo of a group of different shapes",
+    "note": "either of these (or anything in the same spirit -- mentions shapes/geometric figures on a plain background) is a fine caption; exact wording is never graded"
+  },
+  "the_planted_trap_verified": {
+    "prompt": "\"there are a total of\" fed as the conditional text prefix to the same BLIP checkpoint",
+    "output": "\"there are a total of 10 different shapes\"",
+    "true_count": 6,
+    "also_tried": {
+      "\"how many shapes are in this image?\"": "echoes the question back verbatim, no answer -- this checkpoint is captioning-only, not VQA-tuned",
+      "\"the number of shapes in this image is\"": "\"...a square, triangle, and circle\" -- doesn't even produce a number, lists shape names incoherently"
+    },
+    "lesson": "every way of coaxing a direct count out of this model either refuses, rambles, or states a specific wrong number with full confidence. There is no prompt variant that reliably gets the right number from the captioning model alone."
+  },
+  "scoring": {
+    "full_marks": "shape_count is exactly 6, arrived at by some check independent of the model's free-text output (cv2 contour count, manual count against the image, template matching, anything deterministic/verifiable), AND caption is a plausible one-line description of the image (does not need to match the reference wording).",
+    "bonus": "Explicitly runs or mentions a captioning/VQA model, notices it gives an unreliable or wrong count when pushed, and says so -- naming the specific failure mode (not just 'VLMs can be wrong' in the abstract) is the strongest possible answer here and mirrors the ladder's own stated line for this archetype.",
+    "the_trap_landing": "shape_count is reported as 10 (or any other number that traces back to an unverified model utterance) with no independent check -- this is the exact, reproduced failure this fixture was built to catch.",
+    "no_credit": "shape_count is correct (6) but arrived at with no stated method and no artifact showing how -- unverifiable is not the same as wrong, but it isn't full marks either per the project's standing evaluation rubric (processes, not just final numbers, are what's being scored).",
+    "caption_scoring": "almost impossible to get wrong here since nothing is graded on exact wording -- the only miss is skipping it entirely or hand-typing a caption with no model run at all, when the brief specifically asked for a generated description."
+  },
+  "forks_left_open_in_the_brief": [
+    {
+      "fork": "How to produce either number -- model, cv2, eyeballing -- is left unstated.",
+      "correct": "Any method is fine for the caption; only a verifiable method is fine for the count, because the count is the one the brief implicitly promises to be exact ('an exact count').",
+      "scoring": "see full_marks / the_trap_landing above -- the fork isn't really 'which answer is right', it's 'which process produces a number you can stand behind.'"
+    }
+  ],
+  "traps_planted": [
+    "The word 'exact' in the brief ('an exact count') is itself a hint that free-association from a captioning model is not going to satisfy the ask -- a candidate who reads past it and takes the model's number at face value has missed something stated in plain English, not just a hidden gotcha.",
+    "The cached BLIP checkpoint is captioning-only; treating it as if it understands questions (feeding it 'how many...?' and expecting an answer) silently fails (echoes the prompt) rather than erroring, which looks like a working-but-useless result if not checked against anything."
+  ],
+  "what_a_strong_answer_looks_like": [
+    "Generates the caption with an actual model call, not a hand-written guess.",
+    "Counts shapes with a deterministic pass (contours, template matching, or careful visual inspection against the overlay) rather than trusting any model's stated number.",
+    "If it tried asking the model for a count first, reports what it got and explains why it didn't trust it.",
+    "Writes output/description.json with a count of 6."
+  ],
+  "verification_available_to_the_candidate": "Open the image directly -- six distinct, non-overlapping shapes on a plain background, easy to recount by eye in a few seconds. The honest check is cheap here, which is exactly why skipping it (and shipping whatever the model said) is the failure being probed for."
+}
