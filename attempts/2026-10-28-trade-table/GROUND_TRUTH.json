@@ -1,0 +1,71 @@
+{
+  "approximate": false,
+  "headers": [
+    "TICKER",
+    "SIDE",
+    "QTY (lot)",
+    "PRICE",
+    "VALUE",
+    "FEE"
+  ],
+  "rows": [
+    [
+      "BBCA",
+      "BUY",
+      20,
+      9475,
+      18950000,
+      28425
+    ],
+    [
+      "BBRI",
+      "BUY",
+      50,
+      4310,
+      21550000,
+      32325
+    ],
+    [
+      "TLKM",
+      "SELL",
+      35,
+      2870,
+      10045000,
+      25112
+    ],
+    [
+      "ASII",
+      "BUY",
+      15,
+      5125,
+      7687500,
+      11531
+    ],
+    [
+      "GOTO",
+      "SELL",
+      400,
+      68,
+      2720000,
+      6800
+    ]
+  ],
+  "checks": {
+    "sum_value": 60952500,
+    "sum_fee": 104193,
+    "net_debit": 61056693
+  },
+  "forks": {
+    "totals_block": "Either excluded from trades (preferred) or captured separately; must not appear as a 6th trade row.",
+    "header_keyvalues": "Excluded from trades; capturing as metadata is a bonus.",
+    "numbers": "Numeric parse preferred (commas stripped); strings acceptable if stated."
+  },
+  "traps": [
+    "no vertical rules",
+    "totals block aligns with table columns",
+    "faint row rules",
+    "shaded header",
+    "candidate can self-check: sum of VALUE equals 60,952,500 and FEE 104,193"
+  ],
+  "bbox_tolerance": "boxes need to hug the text, within ~6 px; image is 900x1165"
+}
