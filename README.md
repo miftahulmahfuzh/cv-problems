@@ -94,7 +94,9 @@ from ocr_bridge import ocr          # path or ndarray -> [{"text", "bbox": [x0,y
 
 Or from a shell: `python reference/snippets/ocr_bridge.py image.png`. On the
 2026-10-28 statement it read all 30 table cells exactly. Known quirk: it drops the
-spaces in multi-word lines (`21October2026`). Rebuild with
+spaces in multi-word lines (`21October2026`). On monospace text, spaces can be rebuilt from blank character cells in the ink
+projection (see `.runs/2026-10-28-3/extract.py`, `respace`); also splits one printed row
+into fragments, so group tokens by y-centre before parsing. Rebuild with
 `uv venv .venv-ocr --python 3.12 && VIRTUAL_ENV=.venv-ocr uv pip install rapidocr-onnxruntime pymupdf`.
 
 ## Attempts
@@ -109,3 +111,4 @@ spaces in multi-word lines (`21October2026`). Rebuild with
 | 2026-10-26 | Caption an image and report an exact count | 3 | 25 min | passed in 10.8 min, **count candidate-verified** (first in series); caption built from detections, no model call &mdash; rubric bonus forfeited &mdash; `attempts/2026-10-26-caption-count/` · [worklog](https://claude.ai/artifact/YUH8SNQefJTLG8nGGshLxn) |
 | 2026-10-28 | Footprint areas and parcel containment from a site plan PDF | 4 | 30 min | passed in 14.9 min, all six areas exact; verification candidate-asserted, no numbers stated &mdash; `attempts/2026-10-28-site-footprints/` · [worklog](https://claude.ai/artifact/HzYRcZYQHLqk2LYYFVCRiK) |
 | 2026-10-28 | Recover a trades table from a statement image (cells, text, boxes) | 2 | 20 min | passed in 11.0 min, text candidate-verified cell by cell, boxes not; candidate assumed a PDF vector layer, input was a PNG; glyphs read by DejaVu template matching, no OCR &mdash; `attempts/2026-10-28-trade-table/` · [worklog](https://claude.ai/artifact/RxVJziX4chq2JRxpJkL6Fx) |
+| 2026-10-28 | Extract a scanned till receipt to JSON | 2 | 25 min | passed in 7.3 min, every value matches; JSON candidate-read, overlay not reviewed, no numbers stated &mdash; `attempts/2026-10-28-till-receipt/` · [worklog](https://claude.ai/artifact/6XFis3ec5pR4ZqbaL6fbiV) |

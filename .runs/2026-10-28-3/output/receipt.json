@@ -1,0 +1,61 @@
+{
+  "store": {
+    "name": "TOKO SINAR JAYA",
+    "address": "Jl. Melati No. 12, Bandung"
+  },
+  "date": "2026-10-21",
+  "time": "14:32",
+  "cashier": "DEWI",
+  "receipt_no": "004517",
+  "items": [
+    {
+      "name": "INDOMIE GORENG",
+      "quantity": 5,
+      "unit_price": 3500,
+      "line_total": 17500
+    },
+    {
+      "name": "AQUA 600ML",
+      "quantity": 3,
+      "unit_price": 4000,
+      "line_total": 12000
+    },
+    {
+      "name": "BERAS 5KG",
+      "quantity": 1,
+      "unit_price": 68500,
+      "line_total": 68500
+    },
+    {
+      "name": "TELUR AYAM 1KG",
+      "quantity": 2,
+      "unit_price": 29000,
+      "line_total": 58000
+    },
+    {
+      "name": "SUSU UHT 1L",
+      "quantity": 2,
+      "unit_price": 18750,
+      "line_total": 37500
+    }
+  ],
+  "totals": {
+    "subtotal": 193500,
+    "member_discount": -5000,
+    "total": 188500,
+    "ppn": {
+      "rate_percent": 11,
+      "included_in_total": true,
+      "amount": 18680
+    },
+    "cash": 200000,
+    "change": 11500
+  },
+  "checks": {
+    "sum_of_line_totals_equals_subtotal": true,
+    "each_line_total_equals_qty_x_unit": true,
+    "subtotal_plus_discount_equals_total": true,
+    "cash_minus_total_equals_change": true,
+    "ppn_matches_total_x_11_over_111": true
+  }
+}

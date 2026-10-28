@@ -6,12 +6,13 @@
   "minutes": 25,
   "created_at": "2026-10-28T02:26:23+00:00",
   "spawned_at": "2026-10-28T02:26:35+00:00",
-  "started_at": null,
-  "finished_at": null,
+  "started_at": "2026-10-28T02:32:44.977Z",
+  "finished_at": "2026-10-28T02:40:07+00:00",
   "session_name": "cvtest-2026-10-28-3",
   "workspace": "/home/miftah/cv-problems/.runs/2026-10-28-3",
   "window": "@109",
   "pane": "%148",
   "brief_pane": "%149",
-  "artifact": null
+  "artifact": "https://claude.ai/artifact/6XFis3ec5pR4ZqbaL6fbiV",
+  "transcript": "/home/miftah/.claude/projects/-home-miftah-cv-problems--runs-2026-10-28-3/9ba79d8d-5173-47f7-a697-2cb4b56e4ff8.jsonl"
 }
