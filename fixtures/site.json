@@ -1,0 +1,61 @@
+{
+  "scale": "1:500",
+  "pt_per_m": 5.669291338582678,
+  "parcel_area_m2": 9600.0,
+  "buildings": {
+    "BLDG A": {
+      "area_m2": 300.0,
+      "area_inside_parcel_m2": 300.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        20.0,
+        17.5
+      ]
+    },
+    "BLDG B": {
+      "area_m2": 630.0,
+      "area_inside_parcel_m2": 630.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        56.79,
+        22.43
+      ]
+    },
+    "BLDG C": {
+      "area_m2": 800.0,
+      "area_inside_parcel_m2": 800.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        25.0,
+        55.0
+      ]
+    },
+    "BLDG D": {
+      "area_m2": 600.0,
+      "area_inside_parcel_m2": 400.0,
+      "area_outside_parcel_m2": 200.0,
+      "centroid_m": [
+        115.0,
+        40.0
+      ]
+    },
+    "BLDG E": {
+      "area_m2": 360.0,
+      "area_inside_parcel_m2": 360.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        69.99,
+        62.7
+      ]
+    },
+    "SHED F": {
+      "area_m2": 9.0,
+      "area_inside_parcel_m2": 9.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        86.5,
+        9.5
+      ]
+    }
+  }
+}

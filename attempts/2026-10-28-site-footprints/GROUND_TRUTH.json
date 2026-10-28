@@ -1,0 +1,76 @@
+{
+  "scale": "1:500",
+  "pt_per_m": 5.669291338582678,
+  "parcel_area_m2": 9600.0,
+  "buildings": {
+    "BLDG A": {
+      "area_m2": 300.0,
+      "area_inside_parcel_m2": 300.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        20.0,
+        17.5
+      ]
+    },
+    "BLDG B": {
+      "area_m2": 630.0,
+      "area_inside_parcel_m2": 630.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        56.79,
+        22.43
+      ]
+    },
+    "BLDG C": {
+      "area_m2": 800.0,
+      "area_inside_parcel_m2": 800.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        25.0,
+        55.0
+      ]
+    },
+    "BLDG D": {
+      "area_m2": 600.0,
+      "area_inside_parcel_m2": 400.0,
+      "area_outside_parcel_m2": 200.0,
+      "centroid_m": [
+        115.0,
+        40.0
+      ]
+    },
+    "BLDG E": {
+      "area_m2": 360.0,
+      "area_inside_parcel_m2": 360.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        69.99,
+        62.7
+      ]
+    },
+    "SHED F": {
+      "area_m2": 9.0,
+      "area_inside_parcel_m2": 9.0,
+      "area_outside_parcel_m2": 0.0,
+      "centroid_m": [
+        86.5,
+        9.5
+      ]
+    }
+  },
+  "forks": {
+    "legend_swatch": "Must be excluded: it is a key, not a structure. Including it as a 7th building is a miss.",
+    "BLDG D": "Acceptable: flag partly outside, ideally with inside 400 / outside 200 m2 split (total 600). A bare boolean is acceptable if stated; calling it fully inside or fully outside is wrong.",
+    "SHED F": "Either include (9 m2) or exclude with a stated threshold; silently dropping or counting without saying so is a communication miss.",
+    "units": "m2 expected. Scale from '1:500' text or the 20 m bar both give 5.669 pt/m; pixel areas or unconverted pt2 are wrong."
+  },
+  "traps": [
+    "BLDG C courtyard hole (800 not 900)",
+    "BLDG E rotated, bbox area 4x wrong",
+    "BLDG B L-shape",
+    "legend swatch same fill as buildings",
+    "each building may be several path items; get_drawings returns 14 items"
+  ],
+  "expected_building_count": "6 including shed, 5 if shed excluded as sub-threshold; legend never counted",
+  "tolerance": "1% on area_m2"
+}
