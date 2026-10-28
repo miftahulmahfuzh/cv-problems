@@ -1,0 +1,37 @@
+{
+  "corners_tl_tr_br_bl": [
+    [
+      310.0,
+      140.0
+    ],
+    [
+      1180.0,
+      95.0
+    ],
+    [
+      1250.0,
+      1120.0
+    ],
+    [
+      250.0,
+      1210.0
+    ]
+  ],
+  "original_size": [
+    900,
+    1150
+  ],
+  "approximate": false,
+  "forks": {
+    "aspect": "0.783 +-3% of w/h; stated choice preferred",
+    "margin": "either, stated"
+  },
+  "traps": [
+    "dark desk bg",
+    "shadow",
+    "lighting gradient",
+    "perspective not affine",
+    "corner ordering"
+  ],
+  "check": "warp flat.png to 900x1150 and compare with fixtures/mock/document_table.png; edges of the table header band should be horizontal within 1 degree"
+}
