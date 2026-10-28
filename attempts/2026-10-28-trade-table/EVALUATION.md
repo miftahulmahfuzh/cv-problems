@@ -3,12 +3,22 @@
 **Result: passed, in 11.0 of 20 minutes. Text candidate-verified column by column;
 boxes were not candidate-verified.** Five instructions, 19 tool calls, no interrupts.
 
-> **Cold read did not run.** The skill calls for a fresh subagent scoring from the
-> transcript alone. It was dispatched twice and declined both times: it inherited the
-> workspace `CLAUDE.md` (do not read outside the directory, do not grade) and could not
-> see the `/finish-cv-test` invocation that lifts it. The scores below are the
-> coaching session's own, which is the lenient judge the skill warns about. Read them
-> with that discount. Fix for the harness: have the subagent run from the repo root.
+> **Cold read.** The first attempt, a subagent, refused to score because it inherited
+> the workspace rules. After that, `bin/cvtest.py coldread` was added (a headless
+> `claude -p` started at the repo root) and run on this attempt; its full text is
+> `COLD_READ.md`. Where it disagrees with the scores below:
+>
+> - **Requirement capture:** cold read says *weak*, I said *adequate*. Its point stands
+>   in part: the candidate's own restatement ("each entry's metadata contains every
+>   column value") leaves out the per-cell boxes the pasted brief asked for. I keep
+>   *adequate* because the brief was pasted whole, but the restatement should have
+>   kept boxes.
+> - **Correction quality:** cold read says *adequate*, I said *strong*. It wants the
+>   correction to specify the fix ("no installs, read cells from pixels") instead of
+>   asking which OCR to set up. Fair; asking also produced a good option list, so I
+>   keep *strong* with that caveat.
+> - The other five dimensions agree. The cold read repeated "900x1165" from the ground
+>   truth note; the file is 900x1150.
 
 ## Correctness
 

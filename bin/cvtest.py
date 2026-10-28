@@ -5,6 +5,7 @@
     brief      print the candidate-facing brief (what the top tmux pane shows)
     spawn      open the run in a tmux window: brief pane above, Claude pane below
     finish     stop the clock, pull the session transcript back out, print stats
+    coldread   score the transcript in a fresh headless session started at the repo root
     status     list attempts
 
 Two things here are load-bearing and easy to undo by accident.
@@ -531,6 +532,48 @@ def cmd_finish(args):
     return 0
 
 
+COLD_PROMPT = """You are scoring a candidate's prompting in a computer-vision live-coding drill. \
+Read exactly these files and nothing else:
+- {repo}/reference/prompting-playbook.md (the seven dimensions and how to score them)
+- {attempt}/PROBLEM.md (the brief and sealed examiner notes)
+- {attempt}/GROUND_TRUTH.json
+- {attempt}/TRANSCRIPT.md (the candidate's verbatim instructions and a list of tool calls)
+
+Score each of the seven dimensions strong / adequate / weak / not exercised, using ONLY \
+the candidate's own instructions as evidence of what they said. For each: quote their \
+actual words and give a concrete cheaper alternative instruction. Then: quote the single \
+weakest instruction verbatim, name the single highest-leverage change for next time, and \
+flag any requirement drift (anywhere a reply changed the spec). Do not praise without \
+tying it to a specific instruction. Under 600 words."""
+
+
+def cmd_coldread(args):
+    """Score the transcript from a session that has nothing from the run in it.
+
+    Started with cwd = the repo root, so the run workspace's CLAUDE.md (which forbids
+    reading outside it and forbids grading) is never loaded; and `-p` starts it with
+    no memory of the candidate's session. A subagent spawned from inside the run
+    inherits those rules and, correctly, refuses to lift them on a coordinator's say-so.
+    """
+    attempt = Path(args.attempt).resolve()
+    if not (attempt / "TRANSCRIPT.md").exists():
+        return die("no TRANSCRIPT.md; run `finish` first")
+    prompt = COLD_PROMPT.format(repo=REPO, attempt=attempt)
+    cmd = ["claude", "-p", "--allowedTools", "Read"]
+    if args.model:
+        cmd += ["--model", args.model]
+    try:
+        r = subprocess.run(cmd, input=prompt, cwd=str(REPO), capture_output=True,
+                           text=True, timeout=args.timeout)
+    except subprocess.TimeoutExpired:
+        return die("cold read timed out", timeout_s=args.timeout)
+    if r.returncode != 0 or not r.stdout.strip():
+        return die("cold read failed", returncode=r.returncode, stderr=r.stderr[-500:])
+    (attempt / "COLD_READ.md").write_text(r.stdout.strip() + "\n")
+    print(json.dumps({"ok": True, "cold_read": str(attempt / "COLD_READ.md")}, indent=2))
+    return 0
+
+
 def cmd_status(args):
     rows = []
     for d in sorted((REPO / "attempts").glob("*/")):
@@ -570,6 +613,12 @@ def main(argv=None):
     p = sub.add_parser("finish", help="stop the clock and render the transcript")
     p.add_argument("--attempt", required=True)
     p.set_defaults(fn=cmd_finish)
+
+    p = sub.add_parser("coldread", help="score the transcript from a fresh root-level session")
+    p.add_argument("--attempt", required=True)
+    p.add_argument("--model", default=None)
+    p.add_argument("--timeout", type=int, default=300)
+    p.set_defaults(fn=cmd_coldread)
 
     p = sub.add_parser("status", help="list attempts")
     p.set_defaults(fn=cmd_status)
