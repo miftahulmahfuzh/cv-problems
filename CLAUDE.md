@@ -63,3 +63,6 @@ Score against the seven dimensions in `reference/prompting-playbook.md`. Be spec
 and quote the candidate's actual words from `TRANSCRIPT.md`. An evaluation that says
 "good communication" is worthless; one that quotes the instruction and names the
 cheaper alternative is not.
+
+> [!IMPORTANT]
+> if user typed "i": for each points in Carry into the next attempt, you need to write a ready to paste example of the instruction that i can use. i like practical things, this way i can write similar instructions in the future. use haiku model for this task.
