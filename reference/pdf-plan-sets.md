@@ -70,6 +70,18 @@ distinct widths first and look.
 > **centreline gross**, and no amount of cross-checking inside the PDF will tell you
 > otherwise. Say so when you report an area.
 
+**Areas of filled shapes.** A building footprint on a vector sheet is a filled path;
+take its vertices from the `l` / `qu` / `re` items and use the shoelace formula,
+`0.5 * abs(sum(x_i*y_{i+1} - x_{i+1}*y_i))`. No contour and no bounding box, so L-shapes
+and rotated rectangles come out exact. A **courtyard** is usually one keyhole path:
+outer ring, a bridge edge walked in both directions, then the inner ring wound the
+other way. Shoelace over the whole path gives outer minus hole with no special case
+(the bridge cancels). To get the part inside a boundary, clip with Sutherland-Hodgman
+against the (convex) parcel, then shoelace the result. A legend swatch is drawn with
+the same fill as the buildings, so exclude it by position or by its neighbouring text.
+Scale: derive it from the scale bar (`rect.width` of the heavy line = the labelled
+length) and check it against the printed ratio (`pt_per_m = 72/25.4*1000/ratio`).
+
 ---
 
 ## Reconstructing rooms from walls

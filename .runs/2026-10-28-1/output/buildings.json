@@ -1,0 +1,44 @@
+[
+  {
+    "id": "A",
+    "label": "BLDG A",
+    "area_m2": 300.0,
+    "within_parcel": true,
+    "area_inside_parcel_m2": 300.0
+  },
+  {
+    "id": "B",
+    "label": "BLDG B",
+    "area_m2": 630.0,
+    "within_parcel": true,
+    "area_inside_parcel_m2": 630.0
+  },
+  {
+    "id": "C",
+    "label": "BLDG C",
+    "area_m2": 800.0,
+    "within_parcel": true,
+    "area_inside_parcel_m2": 800.0
+  },
+  {
+    "id": "D",
+    "label": "BLDG D",
+    "area_m2": 600.0,
+    "within_parcel": false,
+    "area_inside_parcel_m2": 400.0
+  },
+  {
+    "id": "E",
+    "label": "BLDG E",
+    "area_m2": 360.0,
+    "within_parcel": true,
+    "area_inside_parcel_m2": 360.0
+  },
+  {
+    "id": "F",
+    "label": "SHED F",
+    "area_m2": 9.0,
+    "within_parcel": true,
+    "area_inside_parcel_m2": 9.0
+  }
+]
