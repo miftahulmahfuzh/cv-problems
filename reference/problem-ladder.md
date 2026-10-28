@@ -94,6 +94,15 @@ the *text* blobs by their y-centres instead, which is the more general algorithm
 **The line:** *"No OCR engine here, so I can recover the structure but not the
 glyphs — structure is the half that needs vision, and it's what I'd hand to OCR."*
 
+**If the glyphs are required anyway** (2026-10-28 trade-table): a clean raster in one
+printed font can be read without OCR. Render an atlas of the characters from
+matplotlib's bundled `DejaVuSans.ttf` with PIL, split each cell with
+`cv2.connectedComponentsWithStats`, match each blob by IoU, pick the font size that
+scores best over the row, and cut touching pairs (`TY`, `LK`) with a vertical-cut
+search. Infer spaces from blank gaps (about 0.35 of the font size). Say the limit
+aloud: other fonts, handwriting and noisy scans break it. Keep it behind a
+`read_cell(crop)` function so a real OCR engine can replace it.
+
 *Data: `[mock] document_table.png`; worked solution in `reference/snippets/table_extract.py`*
 
 ### 5. Find the lines (walls, rules, axes)
