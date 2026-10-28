@@ -1,0 +1,17 @@
+{
+  "slug": "till-receipt",
+  "title": "Extract a scanned till receipt to JSON",
+  "date": "2026-10-28",
+  "run_id": "2026-10-28-3",
+  "minutes": 25,
+  "created_at": "2026-10-28T02:26:23+00:00",
+  "spawned_at": "2026-10-28T02:26:35+00:00",
+  "started_at": null,
+  "finished_at": null,
+  "session_name": "cvtest-2026-10-28-3",
+  "workspace": "/home/miftah/cv-problems/.runs/2026-10-28-3",
+  "window": "@109",
+  "pane": "%148",
+  "brief_pane": "%149",
+  "artifact": null
+}

@@ -15,7 +15,8 @@ source /home/miftah/cv-problems/.venv/bin/activate
 - **No `pip install` / `uv pip install` into `.venv`.** It is a mirror of the sealed
   interview environment; adding to it makes practice runs unrepresentative. If
   something is genuinely missing, say so and work around it — that is the skill being
-  rehearsed. A separate venv for an experiment is fine.
+  rehearsed. A separate venv for an experiment is fine. `.venv-ocr/` is one: OCR via
+  `reference/snippets/ocr_bridge.py`, which calls it as a subprocess (see README).
 - **No model downloads.** Load the cached names above.
 - **CPU only.** No `.cuda()`.
 - `cv2.imshow` has no display under WSL. Write the image and read it back.

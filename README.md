@@ -81,9 +81,21 @@ pymupdf · scikit-learn · pandas · numpy · matplotlib · pillow.
 **No OCR engine is installed** (no tesseract binary, no easyocr) and that is
 deliberate — it matches the original test environment, and it forces the better
 answer on document tasks: recover structure with geometry, and read text from the
-PDF's own text layer via `pymupdf` rather than OCRing a raster. To add OCR anyway:
-`uv pip install easyocr` into a **separate** venv — it pulls its own opencv build
-and will fight the one in `.venv`.
+PDF's own text layer via `pymupdf` rather than OCRing a raster.
+
+**OCR is available on the side, in `.venv-ocr/`** (rapidocr-onnxruntime; its wheel
+bundles the models, no download at run time). It has its own opencv build, so it never
+goes into `.venv`. Call it from a `.venv` script through the bridge:
+
+```python
+import sys; sys.path.insert(0, "/home/miftah/cv-problems/reference/snippets")
+from ocr_bridge import ocr          # path or ndarray -> [{"text", "bbox": [x0,y0,x1,y1], "score"}]
+```
+
+Or from a shell: `python reference/snippets/ocr_bridge.py image.png`. On the
+2026-10-28 statement it read all 30 table cells exactly. Known quirk: it drops the
+spaces in multi-word lines (`21October2026`). Rebuild with
+`uv venv .venv-ocr --python 3.12 && VIRTUAL_ENV=.venv-ocr uv pip install rapidocr-onnxruntime pymupdf`.
 
 ## Attempts
 

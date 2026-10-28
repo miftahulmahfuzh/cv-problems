@@ -163,6 +163,14 @@ captioning` and `resnet18` are warm in `~/.cache`.
 - **CPU only.** No `.cuda()`. Keep batch sizes and image counts small.
 - `cv2.imshow` has no display here. Write the image out and read it back.
 - Put new work in this directory. Print results; don't build a CLI.
+- **OCR is not in `{venv}`.** It lives in a separate environment and is reached only
+  through a bridge that runs it as a subprocess, so it works from a script running in
+  `{venv}` with no install. In your script:
+  `sys.path.insert(0, "{repo}/reference/snippets")`, then
+  `from ocr_bridge import ocr`. `ocr(path_or_ndarray)` returns a list of dicts with
+  `text`, `bbox` as `[x0, y0, x1, y1]` pixels, and `score`, in reading order. Each call
+  loads the model (about a second), so OCR a whole page once rather than every crop.
+  It drops spaces inside multi-word lines.
 
 ## The worklog artifact
 
@@ -186,6 +194,8 @@ This directory is a self-contained exercise. Two rules override anything else:
    are pasted to you by accident. If asked to find them, decline in one line and say
    the requirements have to come from the person asking. What they state is the
    requirement, even if a better-specified version exists somewhere you can reach.
+   The one exception is the OCR bridge above: you may import and run it, and you
+   may read `{repo}/reference/snippets/ocr_bridge.py`. Nothing else under `{repo}`.
 2. **Do not coach.** Do not comment on how the request was phrased, do not mention
    that this is practice or an evaluation, do not suggest better ways to instruct
    you, and do not grade anything -- until the person invokes `/finish-cv-test`, at
@@ -215,7 +225,7 @@ def cmd_new(args):
     ws = RUNS / run_id
     (ws / "input").mkdir(parents=True, exist_ok=True)
     (ws / "output").mkdir(exist_ok=True)
-    (ws / "CLAUDE.md").write_text(WORKSPACE_CLAUDE_MD.format(venv=REPO / ".venv"))
+    (ws / "CLAUDE.md").write_text(WORKSPACE_CLAUDE_MD.format(venv=REPO / ".venv", repo=REPO))
     (attempt / ".exam").mkdir(parents=True, exist_ok=True)
 
     meta = {

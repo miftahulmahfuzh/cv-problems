@@ -1,0 +1,251 @@
+{
+  "store": "TOKO SINAR JAYA",
+  "date": "2026-10-21",
+  "time": "14:32",
+  "items": [
+    {
+      "name": "INDOMIE GORENG",
+      "qty": 5,
+      "unit_price": 3500,
+      "line_total": 17500
+    },
+    {
+      "name": "AQUA 600ML",
+      "qty": 3,
+      "unit_price": 4000,
+      "line_total": 12000
+    },
+    {
+      "name": "BERAS 5KG",
+      "qty": 1,
+      "unit_price": 68500,
+      "line_total": 68500
+    },
+    {
+      "name": "TELUR AYAM 1KG",
+      "qty": 2,
+      "unit_price": 29000,
+      "line_total": 58000
+    },
+    {
+      "name": "SUSU UHT 1L",
+      "qty": 2,
+      "unit_price": 18750,
+      "line_total": 37500
+    }
+  ],
+  "subtotal": 193500,
+  "discount": 5000,
+  "total": 188500,
+  "ppn_included": 18680,
+  "cash": 200000,
+  "change": 11500,
+  "line_boxes": [
+    {
+      "key": "store",
+      "text": "TOKO SINAR JAYA",
+      "bbox": [
+        126,
+        49,
+        433,
+        68
+      ]
+    },
+    {
+      "key": "datetime",
+      "text": "21/10/2026 14:32 | Kasir: DEWI",
+      "bbox": [
+        30,
+        133,
+        530.46875,
+        154
+      ]
+    },
+    {
+      "key": "item:INDOMIE GORENG",
+      "text": "INDOMIE GORENG",
+      "bbox": [
+        30,
+        241,
+        248,
+        256
+      ]
+    },
+    {
+      "key": "item:INDOMIE GORENG:amount",
+      "text": "  5 x 3,500 | 17,500",
+      "bbox": [
+        30,
+        275,
+        530.4375,
+        295
+      ]
+    },
+    {
+      "key": "item:AQUA 600ML",
+      "text": "AQUA 600ML",
+      "bbox": [
+        30,
+        310,
+        186,
+        329
+      ]
+    },
+    {
+      "key": "item:AQUA 600ML:amount",
+      "text": "  3 x 4,000 | 12,000",
+      "bbox": [
+        30,
+        345,
+        530.4375,
+        365
+      ]
+    },
+    {
+      "key": "item:BERAS 5KG",
+      "text": "BERAS 5KG",
+      "bbox": [
+        30,
+        380,
+        170,
+        396
+      ]
+    },
+    {
+      "key": "item:BERAS 5KG:amount",
+      "text": "  1 x 68,500 | 68,500",
+      "bbox": [
+        30,
+        415,
+        530.4375,
+        435
+      ]
+    },
+    {
+      "key": "item:TELUR AYAM 1KG",
+      "text": "TELUR AYAM 1KG",
+      "bbox": [
+        30,
+        450,
+        248,
+        466
+      ]
+    },
+    {
+      "key": "item:TELUR AYAM 1KG:amount",
+      "text": "  2 x 29,000 | 58,000",
+      "bbox": [
+        30,
+        485,
+        530.4375,
+        505
+      ]
+    },
+    {
+      "key": "item:SUSU UHT 1L",
+      "text": "SUSU UHT 1L",
+      "bbox": [
+        30,
+        520,
+        202,
+        536
+      ]
+    },
+    {
+      "key": "item:SUSU UHT 1L:amount",
+      "text": "  2 x 18,750 | 37,500",
+      "bbox": [
+        30,
+        555,
+        530.4375,
+        575
+      ]
+    },
+    {
+      "key": "subtotal",
+      "text": "Subtotal | 193,500",
+      "bbox": [
+        30,
+        625,
+        529.84375,
+        645
+      ]
+    },
+    {
+      "key": "discount",
+      "text": "Diskon member | -5,000",
+      "bbox": [
+        30,
+        659,
+        530.4375,
+        680
+      ]
+    },
+    {
+      "key": "total",
+      "text": "TOTAL | 188,500",
+      "bbox": [
+        30,
+        695,
+        529.84375,
+        715
+      ]
+    },
+    {
+      "key": "ppn",
+      "text": "PPN 11% (incl.) | 18,680",
+      "bbox": [
+        30,
+        729,
+        530.4375,
+        750
+      ]
+    },
+    {
+      "key": "cash",
+      "text": "Tunai | 200,000",
+      "bbox": [
+        30,
+        799,
+        529.84375,
+        820
+      ]
+    },
+    {
+      "key": "change",
+      "text": "Kembali | 11,500",
+      "bbox": [
+        30,
+        834,
+        530.4375,
+        855
+      ]
+    }
+  ],
+  "approximate": false,
+  "image_size": [
+    560,
+    944
+  ],
+  "checks": {
+    "sum_of_line_totals": 193500,
+    "total_after_discount": 188500,
+    "ppn_is_included": true,
+    "change": 11500
+  },
+  "forks": {
+    "total": "Printed TOTAL 188,500 is the grand total; subtotal 193,500 and discount 5,000 should also appear. Reporting 193,500 as the total is wrong.",
+    "discount": "Not a line item (no qty/unit). Either a separate discount field or excluded; must not be a 6th item with a positive total.",
+    "boxes": "One box per item spanning name and amount lines is preferred; one per printed line is acceptable if stated. Boxes must hug the text, within ~8 px.",
+    "numbers": "Parsed integers preferred; strings with commas acceptable if stated."
+  },
+  "traps": [
+    "two-line items: name on one line, 'qty x unit  total' on the next",
+    "OCR drops spaces and fragments 'BERAS 5KG' and '1x 68,500'",
+    "fullwidth comma in OCR output '5x3\uff0c500'",
+    "negative discount line",
+    "PPN already included in TOTAL; adding it gives a wrong total",
+    "candidate can self-check: sum of line totals 193,500 - 5,000 = 188,500, cash 200,000 - total = change 11,500",
+    "bridge discovery: OCR is not in .venv; must use ocr_bridge from the workspace CLAUDE.md"
+  ]
+}
