@@ -328,6 +328,14 @@ ask CLIP to count. For counting, use geometry.
     and *actually look at it*. Reading back the annotated output is the one
     verification step that catches everything else on this list.
 
+12. **A perspective warp's output size is yours to choose, and the wrong choice
+    stretches the page.** Averaging opposite edge lengths of the photographed
+    quadrilateral does not give the page's true aspect (it gave 0.894 for a 0.783
+    page). State the target size (A4 = 0.707, or the size you expect), or estimate
+    the aspect from the homography. Then check it: resize to the expected size and
+    confirm a header band is horizontal. Shadow and uneven lighting survive a
+    warp; a scan also needs them flattened (divide by a heavy blur of the page).
+
 ---
 
 ## 5. The decision tree

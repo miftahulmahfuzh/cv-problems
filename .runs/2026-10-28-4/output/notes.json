@@ -1,0 +1,33 @@
+{
+  "method": "HSV threshold (low saturation, high value) -> morphology -> largest contour -> convex hull -> approxPolyDP to 4 corners -> getPerspectiveTransform + warpPerspective",
+  "input_size": [
+    1600,
+    1300
+  ],
+  "corners_tl_tr_br_bl": [
+    [
+      310.0,
+      141.0
+    ],
+    [
+      1179.0,
+      96.0
+    ],
+    [
+      1247.0,
+      1119.0
+    ],
+    [
+      251.0,
+      1207.0
+    ]
+  ],
+  "output_size": [
+    935,
+    1046
+  ],
+  "output_aspect_w_over_h": 0.894,
+  "a4_aspect": 0.707,
+  "interpolation": "cubic",
+  "rotation_applied": "none beyond what the homography implies"
+}
