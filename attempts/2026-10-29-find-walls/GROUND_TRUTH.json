@@ -1,0 +1,42 @@
+{
+  "approximate": false,
+  "image": "2339x1653 @200dpi",
+  "px_per_m": 78.74,
+  "logical_walls": {
+    "count": 7,
+    "total_length_m": 95.0,
+    "total_length_px": 7480,
+    "detail_m": {
+      "exterior": [
+        20,
+        20,
+        12,
+        12
+      ],
+      "interior_vertical": [
+        12,
+        12
+      ],
+      "interior_horizontal": [
+        7
+      ]
+    }
+  },
+  "drawn_segments": {
+    "count": 13,
+    "total_length_m": 87.7,
+    "note": "gaps at 4 doors (1.0,0.9,0.9,0.9 m) and 2 windows (1.8 m each) not counted"
+  },
+  "forks": {
+    "openings": "Either 7 walls through openings (preferred, domain-correct) or 13 segments; must state the choice and the maxLineGap / gap rule. Reporting ~300 raw Hough lines is a miss.",
+    "units": "Metres via 1:100 or the 5 m bar (78.74 px/m); pixels acceptable if stated and the scale is acknowledged."
+  },
+  "traps": [
+    "legend and title block rectangles",
+    "scale bar",
+    "door leaves",
+    "window double lines",
+    "thick walls give two Canny edges"
+  ],
+  "tolerance": "count exact under chosen rule; length within 3%"
+}
