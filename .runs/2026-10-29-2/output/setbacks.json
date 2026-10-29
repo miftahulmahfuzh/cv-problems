@@ -1,0 +1,221 @@
+{
+  "units": "metres",
+  "scale": {
+    "pt_per_m": 5.6693,
+    "bar_20m_pt": 113.386,
+    "nominal_1_500_pt_per_m": 5.6693
+  },
+  "parcel_m": {
+    "width": 120.0,
+    "height": 80.0
+  },
+  "rule": "no building closer than 6.0 m to the parcel boundary; negative distance = past the boundary",
+  "buildings": [
+    {
+      "name": "BLDG A",
+      "polygon_pt": [
+        [
+          260.08,
+          665.31
+        ],
+        [
+          260.08,
+          580.27
+        ],
+        [
+          146.69,
+          580.27
+        ],
+        [
+          146.69,
+          665.31
+        ]
+      ],
+      "distance_by_side_m": {
+        "left": 10.0,
+        "right": 90.0,
+        "top": 55.0,
+        "bottom": 10.0
+      },
+      "nearest_side": "left",
+      "distance_m": 10.0,
+      "required_m": 6.0,
+      "violates": false,
+      "shortfall_m": 0.0,
+      "outside_parcel": false
+    },
+    {
+      "name": "BLDG B",
+      "polygon_pt": [
+        [
+          345.12,
+          665.31
+        ],
+        [
+          515.2,
+          665.31
+        ],
+        [
+          515.2,
+          597.28
+        ],
+        [
+          430.16,
+          597.28
+        ],
+        [
+          430.16,
+          495.23
+        ],
+        [
+          345.12,
+          495.23
+        ]
+      ],
+      "distance_by_side_m": {
+        "left": 45.0,
+        "right": 45.0,
+        "top": 40.0,
+        "bottom": 10.0
+      },
+      "nearest_side": "bottom",
+      "distance_m": 10.0,
+      "required_m": 6.0,
+      "violates": false,
+      "shortfall_m": 0.0,
+      "outside_parcel": false
+    },
+    {
+      "name": "BLDG C",
+      "polygon_pt": [
+        [
+          146.69,
+          325.15
+        ],
+        [
+          316.77,
+          325.15
+        ],
+        [
+          316.77,
+          495.23
+        ],
+        [
+          146.69,
+          495.23
+        ]
+      ],
+      "distance_by_side_m": {
+        "left": 10.0,
+        "right": 80.0,
+        "top": 10.0,
+        "bottom": 40.0
+      },
+      "nearest_side": "left",
+      "distance_m": 10.0,
+      "required_m": 6.0,
+      "violates": false,
+      "shortfall_m": 0.0,
+      "outside_parcel": false
+    },
+    {
+      "name": "BLDG D",
+      "polygon_pt": [
+        [
+          827.01,
+          551.92
+        ],
+        [
+          827.01,
+          438.54
+        ],
+        [
+          656.93,
+          438.54
+        ],
+        [
+          656.93,
+          551.92
+        ]
+      ],
+      "distance_by_side_m": {
+        "left": 100.0,
+        "right": -10.0,
+        "top": 30.0,
+        "bottom": 30.0
+      },
+      "nearest_side": "right",
+      "distance_m": -10.0,
+      "required_m": 6.0,
+      "violates": true,
+      "shortfall_m": 16.0,
+      "outside_parcel": true
+    },
+    {
+      "name": "BLDG E",
+      "polygon_pt": [
+        [
+          577.45,
+          353.5
+        ],
+        [
+          543.43,
+          294.58
+        ],
+        [
+          396.14,
+          379.62
+        ],
+        [
+          430.16,
+          438.54
+        ]
+      ],
+      "distance_by_side_m": {
+        "left": 54.0,
+        "right": 34.02,
+        "top": 4.61,
+        "bottom": 50.0
+      },
+      "nearest_side": "top",
+      "distance_m": 4.61,
+      "required_m": 6.0,
+      "violates": true,
+      "shortfall_m": 1.39,
+      "outside_parcel": false
+    },
+    {
+      "name": "SHED F",
+      "polygon_pt": [
+        [
+          588.9,
+          676.65
+        ],
+        [
+          588.9,
+          659.64
+        ],
+        [
+          571.89,
+          659.64
+        ],
+        [
+          571.89,
+          676.65
+        ]
+      ],
+      "distance_by_side_m": {
+        "left": 85.0,
+        "right": 32.0,
+        "top": 69.0,
+        "bottom": 8.0
+      },
+      "nearest_side": "bottom",
+      "distance_m": 8.0,
+      "required_m": 6.0,
+      "violates": false,
+      "shortfall_m": 0.0,
+      "outside_parcel": false
+    }
+  ]
+}

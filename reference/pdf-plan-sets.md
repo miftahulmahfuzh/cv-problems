@@ -196,3 +196,14 @@ with another cell of the same room or you will draw walls that don't exist.
 new.show_pdf_page(page.rect, page.parent, page.number)   # original underneath
 shape = new.new_shape()                                   # annotations on top
 ```
+
+## Dashed boundaries and legend swatches in `get_drawings()` (site-setback, 2026-10-29)
+
+- A dashed parcel line may be **one** path with a `dashes` pattern (`dashes != "[] 0"`, no fill)
+  or many short segments. Select by `dashes`, then take `rect`; if you get several, union them.
+  Do not assume either form: print the count first.
+- The legend swatch is a filled rect with the same grey as the buildings. Drop any fill whose
+  vertical centre matches a legend word (`EXISTING`) and sits just left of it. "Inside the parcel"
+  is not a safe test, because a building can legitimately cross the boundary.
+- Setback = min over footprint vertices and the four parcel sides, signed so that past the
+  boundary is negative. A rotated building is then handled by its corner, not its bbox.
