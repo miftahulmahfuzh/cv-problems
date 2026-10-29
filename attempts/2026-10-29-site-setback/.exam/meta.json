@@ -1,0 +1,17 @@
+{
+  "slug": "site-setback",
+  "title": "Setback check on a site plan PDF",
+  "date": "2026-10-29",
+  "run_id": "2026-10-29-2",
+  "minutes": 30,
+  "created_at": "2026-10-29T02:50:43+00:00",
+  "spawned_at": "2026-10-29T02:50:53+00:00",
+  "started_at": null,
+  "finished_at": null,
+  "session_name": "cvtest-2026-10-29-2",
+  "workspace": "/home/miftah/cv-problems/.runs/2026-10-29-2",
+  "window": "@113",
+  "pane": "%159",
+  "brief_pane": "%160",
+  "artifact": null
+}

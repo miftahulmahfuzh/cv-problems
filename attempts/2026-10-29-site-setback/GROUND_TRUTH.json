@@ -1,0 +1,54 @@
+{
+  "approximate": false,
+  "threshold_m": 6.0,
+  "scale": "1:500",
+  "pt_per_m": 5.669291338582678,
+  "buildings": {
+    "BLDG A": {
+      "min_dist_to_boundary_m": 10.0,
+      "violates": false,
+      "inside_parcel": true
+    },
+    "BLDG B": {
+      "min_dist_to_boundary_m": 10.0,
+      "violates": false,
+      "inside_parcel": true
+    },
+    "BLDG C": {
+      "min_dist_to_boundary_m": 10.0,
+      "violates": false,
+      "inside_parcel": true
+    },
+    "BLDG D": {
+      "min_dist_to_boundary_m": 0.0,
+      "violates": true,
+      "inside_parcel": false
+    },
+    "BLDG E": {
+      "min_dist_to_boundary_m": 4.61,
+      "violates": true,
+      "inside_parcel": true
+    },
+    "SHED F": {
+      "min_dist_to_boundary_m": 8.0,
+      "violates": false,
+      "inside_parcel": true
+    }
+  },
+  "violators": [
+    "BLDG D",
+    "BLDG E"
+  ],
+  "forks": {
+    "BLDG D": "Must be flagged a violator; distance 0 (or negative / 'crosses boundary'). Calling it compliant is wrong.",
+    "legend_swatch": "Must not appear as a building.",
+    "SHED F": "8.0 m, compliant; included or excluded with a stated reason."
+  },
+  "traps": [
+    "rotated BLDG E: 4.61 m from corner, bbox gives a different number",
+    "dashed boundary",
+    "legend swatch",
+    "units"
+  ],
+  "tolerance": "0.3 m on distances; violator set exact"
+}
