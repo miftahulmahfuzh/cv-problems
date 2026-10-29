@@ -122,6 +122,26 @@ Pick it deliberately and say why.
 
 **Verify:** draw the merged lines in color over the original at 50% opacity.
 
+**Learned from attempt `2026-10-29-find-walls`** (clean CAD scan, no Hough needed):
+- Thick-stroke mask: `morphologyEx(ink, MORPH_OPEN, ones((4,4)))` keeps 6 px walls and
+  drops text, hairline door leaves, legend/title frames and a 3 px scale bar. Then open
+  with `(L,1)` and `(1,L)` kernels and take `RETR_EXTERNAL` contours: one per straight run.
+- **Three rules, not two.** Walls through openings (7, 95.0 m), drawn segments (13,
+  87.7 m), or *gaps excluded from length but wall count kept logical*. A door splits a
+  run in two only if you let it; "door gaps are not counted into the length" does not
+  require the count to go from 7 to 11. State the length with openings removed *and* the
+  count of logical walls, and say which you report as the headline.
+- Window vs door: a window sits *in* the wall plane; a door is a void. On the sheet the
+  windows (1.8 m) are wider than the doors (0.9-1.0 m), so "windows are small" is the
+  wrong reason; "the wall continues through a window" is the right one.
+- Scale: 200 dpi, 1:100 = 78.74 px/m. Measuring the scale bar as a component width
+  includes the end-tick stroke (396 px, not 393.7) and overstates it by 0.6%. Use tick
+  centres. Cross-check with a labelled room area (84 m2 = 7 x 12 m).
+- Corner double counting: a run's bounding extent runs outer edge to outer edge, so every
+  wall that ends at a perpendicular wall is about one stroke width long (~7 px). Trim
+  half a thickness at each junction end, and *check the trim actually fired*
+  (`p0 == extent start` means it did not).
+
 *Data: `[synthetic] fixtures/make_floorplan.py`, `[real]` any public plan sheet*
 
 ### 6. Deskew / flatten a photographed document

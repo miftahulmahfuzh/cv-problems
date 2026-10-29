@@ -492,7 +492,12 @@ def cmd_finish(args):
     # The exam ends when /finish-cv-test is invoked, not at the last line of the
     # file: everything after it is evaluation work in the same session. Without
     # this, re-running `finish` charges the write-up to the candidate's budget.
-    stop = next((t for k, t, _ in turns if k == "command" and t), None)
+    # Only /finish-cv-test counts: any other slash command (/output-style, /model)
+    # before the first instruction would otherwise end the clock before it started
+    # (attempt 2026-10-29-find-walls reported elapsed -15.0 min).
+    stop = next((t for k, t, x in turns
+                 if k == "command" and t and "finish-cv-test" in x
+                 and (first is None or datetime.fromisoformat(t) > first)), None)
     stamps = [t for _, t, _ in turns if t]
     last = datetime.fromisoformat(stop or stamps[-1]) if (stop or stamps) else None
     mins = (last - first).total_seconds() / 60.0 if first and last else None

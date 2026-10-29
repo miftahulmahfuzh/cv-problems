@@ -1,0 +1,242 @@
+{
+  "image": "input/plan.png",
+  "image_size_px": [
+    2339,
+    1653
+  ],
+  "wall_count": 11,
+  "total_length_px": 7238.0,
+  "scale_px_per_m": 79.2,
+  "total_length_m": 91.39,
+  "method": "thick-stroke mask -> largest connected network -> horizontal/vertical straight runs (external contours); centre-line length; door gaps excluded; window thickening ignored",
+  "excluded": [
+    "scale bar (bottom-left)",
+    "title/scale box (bottom-right)",
+    "legend box (top-right)",
+    "text, receptacles, hairline door swings"
+  ],
+  "walls": [
+    {
+      "id": "W01",
+      "orientation": "horizontal",
+      "p0": [
+        193.0,
+        278.0
+      ],
+      "p1": [
+        1774.0,
+        278.0
+      ],
+      "length_px": 1581.0,
+      "length_m": 19.96,
+      "thickness_px": 7,
+      "thickness_bulge_ignored_px": 3
+    },
+    {
+      "id": "W02",
+      "orientation": "horizontal",
+      "p0": [
+        1217.0,
+        750.5
+      ],
+      "p1": [
+        1500.0,
+        750.5
+      ],
+      "length_px": 283.0,
+      "length_m": 3.57,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W03",
+      "orientation": "horizontal",
+      "p0": [
+        1570.0,
+        750.5
+      ],
+      "p1": [
+        1774.0,
+        750.5
+      ],
+      "length_px": 204.0,
+      "length_m": 2.58,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W04",
+      "orientation": "horizontal",
+      "p0": [
+        193.0,
+        1223.5
+      ],
+      "p1": [
+        472.0,
+        1223.5
+      ],
+      "length_px": 279.0,
+      "length_m": 3.52,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W05",
+      "orientation": "horizontal",
+      "p0": [
+        551.0,
+        1223.5
+      ],
+      "p1": [
+        1774.0,
+        1223.5
+      ],
+      "length_px": 1223.0,
+      "length_m": 15.44,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W06",
+      "orientation": "vertical",
+      "p0": [
+        194.5,
+        276.0
+      ],
+      "p1": [
+        194.5,
+        1228.0
+      ],
+      "length_px": 952.0,
+      "length_m": 12.02,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W07",
+      "orientation": "vertical",
+      "p0": [
+        746.5,
+        276.0
+      ],
+      "p1": [
+        746.5,
+        875.0
+      ],
+      "length_px": 599.0,
+      "length_m": 7.56,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W08",
+      "orientation": "vertical",
+      "p0": [
+        746.5,
+        945.0
+      ],
+      "p1": [
+        746.5,
+        1228.0
+      ],
+      "length_px": 283.0,
+      "length_m": 3.57,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W09",
+      "orientation": "vertical",
+      "p0": [
+        1218.5,
+        276.0
+      ],
+      "p1": [
+        1218.5,
+        481.0
+      ],
+      "length_px": 205.0,
+      "length_m": 2.59,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W10",
+      "orientation": "vertical",
+      "p0": [
+        1218.5,
+        551.0
+      ],
+      "p1": [
+        1218.5,
+        1228.0
+      ],
+      "length_px": 677.0,
+      "length_m": 8.55,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    },
+    {
+      "id": "W11",
+      "orientation": "vertical",
+      "p0": [
+        1769.5,
+        276.0
+      ],
+      "p1": [
+        1769.5,
+        1228.0
+      ],
+      "length_px": 952.0,
+      "length_m": 12.02,
+      "thickness_px": 6,
+      "thickness_bulge_ignored_px": 0
+    }
+  ],
+  "door_gaps": [
+    {
+      "between": [
+        "W02",
+        "W03"
+      ],
+      "orient": "h",
+      "at": 750.5,
+      "from_": 1500.0,
+      "to": 1570.0,
+      "width_px": 70.0
+    },
+    {
+      "between": [
+        "W04",
+        "W05"
+      ],
+      "orient": "h",
+      "at": 1223.5,
+      "from_": 472.0,
+      "to": 551.0,
+      "width_px": 79.0
+    },
+    {
+      "between": [
+        "W07",
+        "W08"
+      ],
+      "orient": "v",
+      "at": 746.5,
+      "from_": 875.0,
+      "to": 945.0,
+      "width_px": 70.0
+    },
+    {
+      "between": [
+        "W09",
+        "W10"
+      ],
+      "orient": "v",
+      "at": 1218.5,
+      "from_": 481.0,
+      "to": 551.0,
+      "width_px": 70.0
+    }
+  ]
+}
